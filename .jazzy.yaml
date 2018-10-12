@@ -1,0 +1,12 @@
+output: docs
+author: Adriaan (Arjan) Duijzer - SwiftCommon
+author_url: https://nxtstep.nl
+exclude: /*/internal*
+module: DataKit
+github_url: https://github.com/SwiftCommon/DataKit
+theme: jony
+xcodebuild_arguments:
+  - "-project"
+  - 'DataKit.xcodeproj'
+  - "-scheme"
+  - 'DataKit'
