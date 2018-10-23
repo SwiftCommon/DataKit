@@ -5,7 +5,7 @@
 import XCTest
 @testable import DataKit
 
-final class Data_ASCIIStringTests: XCTestCase {
+final class DataASCIIStringTests: XCTestCase {
 
     func testIncompatibleData() {
         let testString = "Héllø, this îs ån ÜTF8 ßtrìnƒ"
@@ -20,6 +20,6 @@ final class Data_ASCIIStringTests: XCTestCase {
 
     static var allTests = [
         ("testASCIIData", testASCIIData),
-        ("testIncompatibleData", testIncompatibleData),
+        ("testIncompatibleData", testIncompatibleData)
     ]
 }

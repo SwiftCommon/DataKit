@@ -7,7 +7,8 @@
 
 Swift µframework for Data operations.
 
-# Features
+Features
+--------
 
 ### Data+String
 
@@ -19,14 +20,14 @@ data.utf8string // -> "Øabcd"
 data.asciiString // -> nil
 ```
 
-- Map Data to Hexidecimal String
+* Map Data to Hexidecimal String
 
 ```swift
 let data = Data(bytes: [0xc3, 0x98, 0x61, 0x62, 0x63, 0x64])
 data.hexString() // -> "C39861626364
 ```
 
-- Initialize Data with Hex String
+* Initialize Data with Hex String
 
 ```swift
 let hexString = "C39861626364"
@@ -52,10 +53,12 @@ Installation
 ```
 
 
-# Contributing
+Contributing
+------------
 
 Feel free to check the TODO list and/or add your favourite missing Data related feature through a Pull request.
 
-# License
+License
+-------
 
 Licensed under the MIT license.

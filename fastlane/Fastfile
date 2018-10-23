@@ -18,6 +18,13 @@
 # Update this, if you use features of a newer version
 fastlane_version "2.107.0"
 
+def true?(value)
+  if value.nil?
+    raise "Nil is not true or false"
+  end
+  value.to_s.downcase == "true"
+end
+
 #Test Lanes
 desc "Runs tests and builds example for the given environment"
 desc "The lane to run by ci on every commit and PR. This lanes calls the lanes `test_framework`, `static_code_analysis` and `generate_docs`."
@@ -82,7 +89,28 @@ desc " * **`fail_build`**: Whether the build should fail when linting produces e
 desc " * **`strict`**: Lint mode strict [default: true]. ('SC_CODE_ANALYSIS_STRICT')"
 desc ""
 lane :static_code_analysis do |options|
-  # TODO
+  if !options[:fail_build].nil?
+    fail_build = options[:fail_build]
+  elsif !ENV['SC_CODE_ANALYSIS_FAILS_BUILD'].nil?
+    fail_build = true?(ENV['SC_CODE_ANALYSIS_FAILS_BUILD'])
+  else
+    fail_build = true
+  end
+
+  if !options[:strict].nil?
+    strict = options[:strict]
+  elsif !ENV['SC_CODE_ANALYSIS_STRICT'].nil?
+    strict = true?(ENV['SC_CODE_ANALYSIS_STRICT'])
+  else
+    strict = true
+  end
+
+  swiftlint(
+    mode: :lint,
+    strict: strict,
+    ignore_exit_status: !fail_build,
+    quiet: true
+  )
 end
 
 desc "Builds the example file"
@@ -95,7 +123,7 @@ desc ""
 lane :build_example do |options|
 
   xcodebuild(
-    workspace: ENV["EXAMPLE_WORKSPACE"],
+    project: ENV["SC_PROJECT"],
     scheme: ENV["EXAMPLE_SCHEME"],
     build: true,
     destination: ENV["EXAMPLE_DESTINATION"],

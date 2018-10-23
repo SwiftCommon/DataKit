@@ -16,12 +16,9 @@ matrix:
     - env: FASTLANE_ENV=ios12_xcode10
     - env: FASTLANE_ENV=osx
 before_install:
-  # Force bundler 1.12.5 because version 1.13 has issues, see https://github.com/fastlane/fastlane/issues/6065#issuecomment-246044617
-  #- gem uninstall bundler -v '>1.12.5' --force --executables || echo "bundler >1.12.5 is not installed"
   - gem install bundler -v 1.16.1 --no-rdoc --no-ri --no-document --quiet
   - brew update
   - brew install swiftlint
-  #- gem install fastlane --no-rdoc --no-ri --no-document --quiet
   - bundle install
 script:
   - set -o pipefail
@@ -29,9 +26,10 @@ script:
   - bundle exec fastlane $FASTLANE_LANE configuration:Debug --env $FASTLANE_ENV
   - bundle exec fastlane $FASTLANE_LANE configuration:Release --env $FASTLANE_ENV
 after_success:
-  # Do Danger analysis
+  # TODO Do Danger analysis
+  # Run codecov
   - if [ "$FASTLANE_LANE" == "code_coverage" ]; then
-     bash <(curl -s https://codecov.io/bash) -J 'DataKit';
+     bash <(curl -s https://codecov.io/bash);
     fi
 after_failure:
  - cat -n ~/Library/Logs/scan/*
