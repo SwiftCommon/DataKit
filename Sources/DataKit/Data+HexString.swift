@@ -4,7 +4,7 @@
 
 import Foundation
 
-public extension Data {
+extension Data {
     /**
         Transform data to Hex String
 
