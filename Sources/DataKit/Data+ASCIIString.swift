@@ -5,7 +5,7 @@
 import Foundation
 
 /// Convert Data into String
-public extension Data {
+extension Data {
 
     /// Convert the Data blob to a 7-bit ASCII string when possible
     /// - Returns: unicode String

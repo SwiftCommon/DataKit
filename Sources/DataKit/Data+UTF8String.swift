@@ -5,7 +5,7 @@
 import Foundation
 
 /// Convert Data into String
-public extension Data {
+extension Data {
 
     /// Convert the Data blob to an UTF-8 string when possible
     /// - Returns: UTF-8 String

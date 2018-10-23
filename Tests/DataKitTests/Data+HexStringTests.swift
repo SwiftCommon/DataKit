@@ -1,9 +1,10 @@
 //
+// swiftlint:disable:previous file_name
 // Created by Arjan Duijzer on 10/06/2018.
 //
 
-import XCTest
 @testable import DataKit
+import XCTest
 
 final class DataHexStringTests: XCTestCase {
 
