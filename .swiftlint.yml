@@ -1,0 +1,4 @@
+excluded:
+  - Package.swift
+  - vendor/
+line_length: 120

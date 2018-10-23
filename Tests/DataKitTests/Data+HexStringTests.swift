@@ -5,7 +5,7 @@
 import XCTest
 @testable import DataKit
 
-final class Data_HexStringTests: XCTestCase {
+final class DataHexStringTests: XCTestCase {
 
     func testHexString_no_separator() {
         let data = Data(bytes: [0, 1, 80, 127, 255])
@@ -21,10 +21,14 @@ final class Data_HexStringTests: XCTestCase {
 
     func testHexStringToData() {
         let hexString = "0003f6A0ff"
-        let hex = try! Data(hex: hexString)
+        do {
+            let hex = try Data(hex: hexString)
 
-        let expectedBytes: [UInt8] = [0, 3, 246, 160, 255]
-        XCTAssertEqual(hex, expectedBytes.data)
+            let expectedBytes: [UInt8] = [0, 3, 246, 160, 255]
+            XCTAssertEqual(hex, expectedBytes.data)
+        } catch {
+            XCTFail("Could not parse hex string")
+        }
     }
 
     func testHexStringToData_invalid_length() {
@@ -32,8 +36,8 @@ final class Data_HexStringTests: XCTestCase {
         do {
             let data = try Data(hex: hexString)
             XCTAssertNil(data)
-        } catch let e {
-            if case HexStringParsingError.invalidLength(let length) = e {
+        } catch let error {
+            if case HexStringParsingError.invalidLength(let length) = error {
                 XCTAssertEqual(hexString.count, length)
             } else {
                 XCTFail("invalidLength Exception expected, but was not thrown")
@@ -46,8 +50,8 @@ final class Data_HexStringTests: XCTestCase {
         do {
             let data = try Data(hex: hexString)
             XCTAssertNil(data)
-        } catch let e {
-            if case HexStringParsingError.illegalCharacters(let error) = e {
+        } catch let error {
+            if case HexStringParsingError.illegalCharacters(let error) = error {
                 XCTAssertEqual(hexString, error)
             } else {
                 XCTFail("illegalCharacters Exception expected, but was not thrown")
@@ -60,6 +64,6 @@ final class Data_HexStringTests: XCTestCase {
         ("testHexString_with_separator", testHexString_with_separator),
         ("testHexStringToData", testHexStringToData),
         ("testHexStringToData_invalid_length", testHexStringToData_invalid_length),
-        ("testNotSoHexStringToData_illegalCharacters", testNotSoHexStringToData_illegalCharacters),
+        ("testNotSoHexStringToData_illegalCharacters", testNotSoHexStringToData_illegalCharacters)
     ]
 }

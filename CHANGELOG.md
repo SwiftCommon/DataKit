@@ -1,9 +1,12 @@
 # Changelog
 
-### 0.0.1
+0.0.1
+-----
 
-- Array<UInt8>.data -> Data
-- Data.asciiString
-- Data.utf8string
-- Data.hexString()
-- Data.init(hex:)
+* [Tools] Danger
+* [Tools] SwiftLint
+* [Added] Array<UInt8>.data -> Data
+* [Added] Data.asciiString
+* [Added] Data.utf8string
+* [Added] Data.hexString()
+* [Added] Data.init(hex:)

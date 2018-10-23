@@ -32,7 +32,7 @@ public extension Data {
         let data = try? Data(hex: "00ffAAC3")
         ```
 
-        - Throws: `HexStringParsingError` when the string length is invalid or the hex string contains illegal characters.
+        - Throws: `HexStringParsingError` when the length is invalid or the hex string contains illegal characters.
      */
     public init(hex: String) throws {
         // Check invalid length
@@ -63,7 +63,7 @@ public extension Data {
                         // Deallocate dataPtr in case of illegal character - since the dataPtr is unmanaged
                         dataPtr.deallocate()
                     }
-                    throw HexStringParsingError.illegalCharacters(hex)
+                    throw HexStringParsingError.illegalCharacters(pattern: hex)
                 }
                 dataPtr[index / 2] = byte
             }
@@ -77,7 +77,7 @@ public extension Data {
 /// HexString parsing error cases
 public enum HexStringParsingError: Error {
     /// characters do not conform to regex pattern: `[a-z][A-Z][0-9]`.
-    case illegalCharacters(String)
+    case illegalCharacters(pattern: String)
     /// When the String length is *odd*
-    case invalidLength(Int)
+    case invalidLength(_: Int)
 }
