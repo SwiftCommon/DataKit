@@ -1,5 +1,10 @@
 # DataKit
 
+![Swift 4.0+](https://img.shields.io/badge/Swift-4.0+-orange.svg)
+[![license](https://img.shields.io/github/license/SwiftCommon/DataKit.svg)](https://github.com/SwiftCommon/DataKit/LICENSE)
+[![Build Status](https://travis-ci.org/SwiftCommon/DataKit.svg?branch=master)](https://travis-ci.org/SwiftCommon/DataKit)
+[![codecov](https://codecov.io/gh/SwiftCommon/DataKit/branch/master/graph/badge.svg)](https://codecov.io/gh/SwiftCommon/DataKit)
+
 Swift µframework for Data operations.
 
 # Features
@@ -11,8 +16,8 @@ Swift µframework for Data operations.
 ```swift
 let data = Data(bytes: [0xc3, 0x98, 0x61, 0x62, 0x63, 0x64])
 data.utf8string // -> "Øabcd"
-data.asciiString // -> nil 
-``` 
+data.asciiString // -> nil
+```
 
 - Map Data to Hexidecimal String
 
@@ -27,8 +32,9 @@ data.hexString() // -> "C39861626364
 let hexString = "C39861626364"
 Data(hex: hexString) // -> [0xc3, 0x98, 0x61, 0x62, 0x63, 0x64]
 ```
-        
-# Installation
+
+Installation
+------------
 
 ### SwiftPM
 
