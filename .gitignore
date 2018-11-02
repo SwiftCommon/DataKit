@@ -68,7 +68,7 @@ Carthage/Build
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
-fastlane/test_output
+fastlane/test-output
 
 # Mac
 .DS_Store

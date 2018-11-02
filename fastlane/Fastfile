@@ -1,0 +1,108 @@
+# Customise this file, documentation can be found here:
+# https://github.com/KrauseFx/fastlane/tree/master/docs
+# All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# By default, fastlane will send which actions are used
+# No personal data is shared, more information on https://github.com/fastlane/enhancer
+# Uncomment the following line to opt out
+# opt_out_usage
+
+# If you want to automatically update fastlane if a new version is available:
+# update_fastlane
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "2.107.0"
+
+#Test Lanes
+desc "Runs tests and builds example for the given environment"
+desc "The lane to run by ci on every commit and PR. This lanes calls the lanes `test_framework`, `static_code_analysis` and `generate_docs`."
+desc "####Example:"
+desc "```\nfastlane ci_build configuration:Debug --env osx\n```"
+desc "####Options"
+desc " * **`configuration`**: The build configuration to use [default: Release]. (`SC_CONFIGURATION`)"
+desc ""
+lane :ci_build do |options|
+  if options[:configuration]
+    configuration = options[:configuration]
+  elsif ENV["SC_CONFIGURATION"]
+    configuration = ENV["SC_CONFIGURATION"]
+  else
+    configuration = "Release"
+  end
+
+  static_code_analysis options
+  test_framework(configuration: configuration)
+
+  if ENV["EXAMPLE_WORKSPACE"] && ENV["EXAMPLE_SCHEME"]
+    build_example(configuration: configuration)
+  end
+end
+
+desc "Runs all tests for the given environment"
+desc "Set `scan` action environment variables to control test configuration"
+desc "####Example:"
+desc "```\nfastlane test_framework configuration:Debug --env osx\n```"
+desc "####Options"
+desc " * **`configuration`**: The build configuration to use."
+desc ""
+lane :test_framework do |options|
+  scan(
+    configuration: options[:configuration]
+  )
+end
+
+desc "Produces code coverage information"
+desc "Set `scan` action environment variables to control test configuration"
+desc "####Example:"
+desc "```\nfastlane code_coverage configuration:Debug\n```"
+desc "####Options"
+desc " * **`configuration`**: The build configuration to use. The only supported configuration is the `Debug` configuration."
+desc ""
+lane :code_coverage do |options|
+  if options[:configuration] != "Debug"
+    UI.important("Not running code coverage lane for #{options[:configuration]} configuration")
+  else
+    scan(
+      configuration: options[:configuration],
+      xcargs: "OBJROOT=build GCC_GENERATE_TEST_COVERAGE_FILES=YES GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES"
+    )
+  end
+end
+
+desc "Run static code analysis (swiftlint)"
+desc "####Example:"
+desc "```\nfastlane static_code_analysis fail_build:true strict:false\n```"
+desc "####Options"
+desc " * **`fail_build`**: Whether the build should fail when linting produces errors [default: true]. ('SC_CODE_ANALYSIS_FAILS_BUILD')"
+desc " * **`strict`**: Lint mode strict [default: true]. ('SC_CODE_ANALYSIS_STRICT')"
+desc ""
+lane :static_code_analysis do |options|
+  # TODO
+end
+
+desc "Builds the example file"
+desc "Set `xcodebuild` action environment variables to control build configuration"
+desc "####Example:"
+desc "```\nfastlane build_example configuration:Debug --env osx\n```"
+desc "####Options"
+desc " * **`configuration`**: The build configuration to use."
+desc ""
+lane :build_example do |options|
+
+  xcodebuild(
+    workspace: ENV["EXAMPLE_WORKSPACE"],
+    scheme: ENV["EXAMPLE_SCHEME"],
+    build: true,
+    destination: ENV["EXAMPLE_DESTINATION"],
+    configuration: options[:configuration],
+    build_settings: [["ONLY_ACTIVE_ARCH", "NO"]]
+  )
+end
+
+# More information about multiple platforms in fastlane: https://github.com/KrauseFx/fastlane/blob/master/docs/Platforms.md
+# All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
