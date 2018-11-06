@@ -50,8 +50,6 @@ end
 # including in a CHANGELOG for example
 has_app_changes = !modified_files.grep(/Sources/).empty?
 has_test_changes = !modified_files.grep(/Tests/).empty?
-#TODO unused?
-has_danger_changes = !modified_files.grep(/Dangerfile|script\/oss-check|Gemfile/).empty?
 
 # Let people say that this isn't worth a CHANGELOG entry in the PR if they choose
 declared_trivial = (github.pr_title + github.pr_body).include?("#trivial") || !has_app_changes

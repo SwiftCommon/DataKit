@@ -1,23 +1,23 @@
 //
-// swiftlint:disable:previous file_name
 // Created by Arjan Duijzer on 10/06/2018.
 //
 
 @testable import DataKit
+import Nimble
 import XCTest
 
-final class DataUTF8StringTests: XCTestCase {
+final class DataExtUTF8StringTests: XCTestCase {
 
     func testUTF8String() {
         let testString = "Héllø, this îs ån ÜTF8 ßtrìnƒ"
         let data = testString.data(using: .utf8)
-        XCTAssertEqual(testString, data?.utf8string)
+        expect(data?.utf8string).to(equal(testString))
     }
 
     func testIncompatibleData() {
         let testString = "Héllø, this îs ån ÜTF8 ßtrìnƒ"
         let data = testString.data(using: .unicode)
-        XCTAssertNotEqual(testString, data?.utf8string)
+        expect(data?.utf8string).to(beNil())
     }
 
     static var allTests = [

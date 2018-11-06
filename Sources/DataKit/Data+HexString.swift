@@ -75,7 +75,7 @@ extension Data {
 }
 
 /// HexString parsing error cases
-public enum HexStringParsingError: Error {
+public enum HexStringParsingError: Error, Equatable {
     /// characters do not conform to regex pattern: `[a-z][A-Z][0-9]`.
     case illegalCharacters(pattern: String)
     /// When the String length is *odd*

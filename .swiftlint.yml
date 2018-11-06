@@ -33,5 +33,6 @@ opt_in_rules:
   - closure_end_indentation
 excluded:
   - Package.swift
+  - .build/
   - vendor/
 line_length: 120
