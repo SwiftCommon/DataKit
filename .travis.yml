@@ -7,9 +7,9 @@ env:
   - LANG=en_US.UTF-8
   - LANGUAGE=en_US.UTF-8
   - FASTLANE_LANE=ci_build
-#branches:
-  # only:
-    # - master
+branches:
+  only:
+    - master
 matrix:
   include:
     - env: FASTLANE_LANE=code_coverage FASTLANE_ENV=default
