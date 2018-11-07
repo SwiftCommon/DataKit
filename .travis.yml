@@ -32,7 +32,7 @@ script:
 after_success:
   # Run codecov
   - if [ "$FASTLANE_LANE" == "code_coverage" ]; then
-     bash <(curl -s https://codecov.io/bash);
+     bash <(curl -s https://codecov.io/bash) -J 'DataKit';
     fi
 after_failure:
  - cat -n ~/Library/Logs/scan/*

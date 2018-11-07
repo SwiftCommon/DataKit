@@ -50,8 +50,6 @@ end
 # including in a CHANGELOG for example
 has_app_changes = !modified_files.grep(/Sources/).empty?
 has_test_changes = !modified_files.grep(/Tests/).empty?
-#TODO unused?
-has_danger_changes = !modified_files.grep(/Dangerfile|script\/oss-check|Gemfile/).empty?
 
 # Let people say that this isn't worth a CHANGELOG entry in the PR if they choose
 declared_trivial = (github.pr_title + github.pr_body).include?("#trivial") || !has_app_changes
@@ -78,7 +76,7 @@ gem_updated = manifest.manifest_file(name: "Gemfile", path: /Gemfile/, modified_
 gem_lock_updated = manifest.manifest_file(name: "Gemfile.lock", path: /Gemfile.lock/, modified_file_list: modified_files)
 
 if (!gem_updated.updated && gem_lock_updated.updated) || (gem_updated.updated && !gem_lock_updated.updated)
-  failOrWarn("Gemfile or Gemfile.lock is updated, both not both.", declared_dev_known)
+  failOrWarn("Gemfile or Gemfile.lock is updated, but not both.", declared_dev_known)
 end
 
 # Warn when any of the package manifest(s) updated but not others

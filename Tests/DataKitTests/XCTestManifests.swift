@@ -4,9 +4,9 @@ import XCTest
 /// Run all tests in DataKit
 public func allTests() -> [XCTestCaseEntry] {
     return [
-        testCase(DataASCIIStringTests.allTests),
-        testCase(DataHexStringTests.allTests),
-        testCase(DataUTF8StringTests.allTests)
+        testCase(DataExtASCIIStringTests.allTests),
+        testCase(DataExtHexStringTests.allTests),
+        testCase(DataExtUTF8StringTests.allTests)
     ]
 }
 #endif
