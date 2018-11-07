@@ -27,11 +27,12 @@ end
 
 #Test Lanes
 desc "Runs tests and builds example for the given environment"
-desc "The lane to run by ci on every commit and PR. This lanes calls the lanes `test_framework`, `static_code_analysis` and `generate_docs`."
+desc "The lane to run by ci on every commit and PR. This lanes calls the lanes `static_code_analysis`, `update_xcodeproj`, `test_framework` and `generate_docs`."
 desc "####Example:"
-desc "```\nfastlane ci_build configuration:Debug --env osx\n```"
+desc "```\nfastlane ci_build configuration:Debug skip_update_xcodeproj:true --env osx\n```"
 desc "####Options"
 desc " * **`configuration`**: The build configuration to use [default: Release]. (`SC_CONFIGURATION`)"
+desc " * **`skip_update_xcodeproj`**: Whether to slip the update_xcodeproj lane [default: false]. (`SC_SKIP_UPDATE_XCODEPROJ`)"
 desc ""
 lane :ci_build do |options|
   if options[:configuration]
@@ -42,12 +43,38 @@ lane :ci_build do |options|
     configuration = "Release"
   end
 
+  if !options[:skip_update_xcodeproj].nil?
+    skip_update_xcodeproj = options[:skip_update_xcodeproj]
+  elsif !ENV["SC_SKIP_UPDATE_XCODEPROJ"].nil?
+    skip_update_xcodeproj = true?(ENV["SC_SKIP_UPDATE_XCODEPROJ"])
+  else
+    skip_update_xcodeproj = false
+  end
+
+  # Let SPM update the xcodeproj
+  update_xcodeproj unless skip_update_xcodeproj
+
+  # Run swiftlint
   static_code_analysis options
+
+  # Test the whether the project still builds and passes the tests
   test_framework(configuration: configuration)
 
+  # When example project is available see if it still compiles
   if ENV["EXAMPLE_WORKSPACE"] && ENV["EXAMPLE_SCHEME"]
     build_example(configuration: configuration)
   end
+end
+
+desc "Update the xcodeproj to fix the Swift Package manager dependency path(s)"
+desc "####Example:"
+desc "```\nfastlane update_xcodeproj\n```"
+desc ""
+lane :update_xcodeproj do |options|
+  spm(
+    command: "generate-xcodeproj",
+    xcconfig: "Package.xcconfig"
+  )
 end
 
 desc "Runs all tests for the given environment"
@@ -66,14 +93,24 @@ end
 desc "Produces code coverage information"
 desc "Set `scan` action environment variables to control test configuration"
 desc "####Example:"
-desc "```\nfastlane code_coverage configuration:Debug\n```"
+desc "```\nfastlane code_coverage configuration:Debug skip_update_xcodeproj:false\n```"
 desc "####Options"
 desc " * **`configuration`**: The build configuration to use. The only supported configuration is the `Debug` configuration."
+desc " * **`skip_update_xcodeproj`**: Whether to slip the update_xcodeproj lane [default: false]. (`SC_SKIP_UPDATE_XCODEPROJ`)"
 desc ""
 lane :code_coverage do |options|
   if options[:configuration] != "Debug"
     UI.important("Not running code coverage lane for #{options[:configuration]} configuration")
   else
+    if !options[:skip_update_xcodeproj].nil?
+      skip_update_xcodeproj = options[:skip_update_xcodeproj]
+    elsif !ENV["SC_SKIP_UPDATE_XCODEPROJ"].nil?
+      skip_update_xcodeproj = true?(ENV["SC_SKIP_UPDATE_XCODEPROJ"])
+    else
+      skip_update_xcodeproj = false
+    end
+
+    update_xcodeproj options unless skip_update_xcodeproj
     scan(
       configuration: options[:configuration],
       xcargs: "OBJROOT=build GCC_GENERATE_TEST_COVERAGE_FILES=YES GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES"

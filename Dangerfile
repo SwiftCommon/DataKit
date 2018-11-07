@@ -76,7 +76,7 @@ gem_updated = manifest.manifest_file(name: "Gemfile", path: /Gemfile/, modified_
 gem_lock_updated = manifest.manifest_file(name: "Gemfile.lock", path: /Gemfile.lock/, modified_file_list: modified_files)
 
 if (!gem_updated.updated && gem_lock_updated.updated) || (gem_updated.updated && !gem_lock_updated.updated)
-  failOrWarn("Gemfile or Gemfile.lock is updated, both not both.", declared_dev_known)
+  failOrWarn("Gemfile or Gemfile.lock is updated, but not both.", declared_dev_known)
 end
 
 # Warn when any of the package manifest(s) updated but not others
