@@ -113,7 +113,7 @@ lane :code_coverage do |options|
     update_xcodeproj options unless skip_update_xcodeproj
     scan(
       configuration: options[:configuration],
-      xcargs: "OBJROOT=build GCC_GENERATE_TEST_COVERAGE_FILES=YES GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES"
+      xcargs: "-enableCodeCoverage YES -skipUnavailableActions"
     )
   end
 end
