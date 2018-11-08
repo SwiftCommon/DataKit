@@ -56,7 +56,7 @@ Installation
 Contributing
 ------------
 
-Feel free to check the TODO list and/or add your favourite missing Data related feature through a Pull request.
+Feel free to check the [TODO](./TODO.md) list and/or add your favourite missing Data related feature through a Pull request.
 
 * Note: you may have to update the Xcode project file and fix the `Package.swift` dependencies used by this project. You can do so by running:  
 `$ bundle exec fastlane update_xcodeproj`
