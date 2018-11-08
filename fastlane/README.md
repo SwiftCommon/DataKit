@@ -79,12 +79,14 @@ Set `scan` action environment variables to control test configuration
 ####Example:
 
 ```
-fastlane code_coverage configuration:Debug
+fastlane code_coverage configuration:Debug skip_update_xcodeproj:false
 ```
 
 ####Options
 
  * **`configuration`**: The build configuration to use. The only supported configuration is the `Debug` configuration.
+
+ * **`skip_update_xcodeproj`**: Whether to slip the update_xcodeproj lane [default: false]. (`SC_SKIP_UPDATE_XCODEPROJ`)
 
 
 ### static_code_analysis
