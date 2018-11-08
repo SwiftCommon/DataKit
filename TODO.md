@@ -1,8 +1,8 @@
 # TODO
 
 - [x] Swiftlint integration
-- [ ] Setup CI
+- [x] Setup CI
 - [ ] Base64 implementation
 - [ ] Write contributing guidelines
 - [ ] Write *Installation* paragraph in README.md
-- [ ] Danger code checking integration
+- [x] Danger code checking integration
