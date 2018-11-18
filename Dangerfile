@@ -30,16 +30,16 @@ end
 modified_files = git.modified_files + git.added_files
 
 # Warn when there is a big PR
-# only count changes not in docs/
+# only count changes not in docs/ or project files
 modified_files_not_docs = git.diff.stats[:files].select { |info|
   (file, _) = info
-  !(file =~ /^(?!docs\/).*$/).nil?
+  !(file =~ /^(?!docs\/).*$/).nil? && !(file =~ /^(?!.+\.xcodeproj\/).*$/).nil?
 }.map { |info|
   (file, stats) = info
   {:file => file, :changes => stats[:insertions] + stats[:deletions] }
 }
 modified_lines_not_docs = modified_files_not_docs.map { |info| info[:changes] }.reduce { |acc, changes| acc + changes }
-warn "Big PR, consider splitting into smaller" if modified_lines_not_docs > 500
+warn "Big PR, consider splitting into smaller" if modified_lines_not_docs > 400
 
 # If these are all empty something has gone wrong, better to raise it in a comment
 if modified_files.empty? && git.deleted_files.empty?
