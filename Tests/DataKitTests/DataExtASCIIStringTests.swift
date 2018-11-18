@@ -19,7 +19,7 @@ final class DataExtASCIIStringTests: XCTestCase {
         expect(data.asciiString).to(equal("abcd"))
     }
 
-    static var allTests = [
+    static let allTests = [
         ("testASCIIData", testASCIIData),
         ("testIncompatibleData", testIncompatibleData)
     ]

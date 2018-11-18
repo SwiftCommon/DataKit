@@ -1,62 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>  Reference</title>
+    <title>DataKit  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
     <meta charset='utf-8'>
+	<meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1.0" />
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
     
   </head>
   <body>
-    <a title="  Reference"></a>
+    <a title="DataKit  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html"> Docs</a> (100% documented)</p>
+        <p>
+          <a href="index.html">DataKit Docs</a>
+          <span class="no-mobile"> (100% documented)</span>
+        </p>
+    
+        <p class="header-right">
+          <a href="https://github.com/SwiftCommon/DataKit">
+            <img src="img/gh.png"/>
+            <span class="no-mobile">View on GitHub</span>
+          </a>
+        </p>
+    
       </div>
     </header>
-    <div class="content-wrapper">
-      <p id="breadcrumbs">
-        <a href="index.html"> Reference</a>
-        <img id="carat" src="img/carat.png" />
-          Reference
-      </p>
+    <div id="breadcrumbs-container">
+      <div class="content-wrapper">
+        <p id="breadcrumbs">
+          <span class="no-mobile">
+            <a href="index.html">DataKit Reference</a>
+            <img id="carat" src="img/carat.png" />
+          </span>
+          DataKit  Reference
+        </p>
+      </div>
     </div>
-    <div class="content-wrapper">
-      <nav class="sidebar">
-        <ul class="nav-groups">
-          <li class="nav-group-name">
-            <a href="Enums.html">Enumerations</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Enums/HexStringParsingError.html">HexStringParsingError</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Extensions/Array.html">Array</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Extensions/Data.html">Data</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-      <article class="main-content">
-        <section>
-          <section class="section">
-            
-            <h1 id='datakit' class='heading'>DataKit</h1>
+    <div class="wrapper">
+      <div class="article-wrapper">
+        <article class="main-content">
+          <section>
+            <section class="section">
+              
+              <h1 id='datakit' class='heading'>DataKit</h1>
 
 <p><img src="https://img.shields.io/badge/Swift-4.0+-orange.svg" alt="Swift 4.0+">
 <a href="https://github.com/SwiftCommon/DataKit/LICENSE"><img src="https://img.shields.io/github/license/SwiftCommon/DataKit.svg" alt="license"></a>
-<a href="https://codecov.io/github/SwiftCommon/DataKit?branch=master"><img src="https://codecov.io/github/SwiftCommon/DataKit/coverage.svg?branch=master" alt="codecov.io"></a>
-<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage Compatible"></a></p>
+<a href="https://travis-ci.org/SwiftCommon/DataKit"><img src="https://travis-ci.org/SwiftCommon/DataKit.svg?branch=master" alt="Build Status"></a>
+<a href="https://codecov.io/gh/SwiftCommon/DataKit"><img src="https://codecov.io/gh/SwiftCommon/DataKit/branch/master/graph/badge.svg" alt="codecov"></a></p>
 
 <p>Swift µframework for Data operations.</p>
 <h2 id='features' class='heading'>Features</h2>
@@ -67,7 +61,7 @@
 </ul>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">data</span> <span class="o">=</span> <span class="kt">Data</span><span class="p">(</span><span class="nv">bytes</span><span class="p">:</span> <span class="p">[</span><span class="mh">0xc3</span><span class="p">,</span> <span class="mh">0x98</span><span class="p">,</span> <span class="mh">0x61</span><span class="p">,</span> <span class="mh">0x62</span><span class="p">,</span> <span class="mh">0x63</span><span class="p">,</span> <span class="mh">0x64</span><span class="p">])</span>
 <span class="n">data</span><span class="o">.</span><span class="n">utf8string</span> <span class="c1">// -&gt; "Øabcd"</span>
-<span class="n">data</span><span class="o">.</span><span class="n">asciiString</span> <span class="c1">// -&gt; nil </span>
+<span class="n">data</span><span class="o">.</span><span class="n">asciiString</span> <span class="c1">// -&gt; nil</span>
 </code></pre>
 
 <ul>
@@ -98,18 +92,58 @@
 </code></pre>
 <h2 id='contributing' class='heading'>Contributing</h2>
 
-<p>Feel free to check the TODO list and/or add your favourite missing Data related feature through a Pull request.</p>
+<p>Feel free to check the <a href="./TODO.md">TODO</a> list and/or add your favourite missing Data related feature through a Pull request.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    you may have to update the Xcode project file and fix the <code>Package.swift</code> dependencies used by this project. You can do so by running:<br>
+<code>$ bundle exec fastlane update_xcodeproj</code>
+
+</div>
 <h2 id='license' class='heading'>License</h2>
 
 <p>Licensed under the MIT license.</p>
 
+            </section>
           </section>
-        </section>
+        </article>
+      </div>
+      <div class="nav-wrapper">
+        <nav class="nav-bottom">
+          <ul class="nav-groups">
+            <li class="nav-group-name">
+              <a href="Enums.html">Enumerations</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="Enums/Base64.html">Base64</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Enums/Base64Padding.html">Base64Padding</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Enums/HexStringParsingError.html">HexStringParsingError</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="Extensions.html">Extensions</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="Extensions/Array.html">Array</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Extensions/Data.html">Data</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer-wrapper">
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2018-10-26)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="https://nxtstep.nl" target="_blank" rel="external">Adriaan (Arjan) Duijzer - SwiftCommon</a>. All rights reserved. (Last updated: 2018-11-18)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
-      </article>
+      </div>
     </div>
   </body>
 </div>
