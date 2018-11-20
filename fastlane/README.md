@@ -127,6 +127,17 @@ fastlane build_example configuration:Debug --env osx
  * **`configuration`**: The build configuration to use.
 
 
+### fix_xcodeproj_config
+```
+fastlane fix_xcodeproj_config
+```
+Fix Xcodeproj build configuration where needed
+
+Set Swift Bridging Header for Benchmark target
+
+Access: private
+
+
 
 ----
 

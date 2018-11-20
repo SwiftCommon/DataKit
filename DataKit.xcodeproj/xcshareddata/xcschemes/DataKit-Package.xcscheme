@@ -14,6 +14,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DataKit::base64c"
+               BuildableName = "base64c.framework"
+               BlueprintName = "base64c"
+               ReferencedContainer = "container:DataKit.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "DataKit::DataKit"
                BuildableName = "DataKit.framework"
                BlueprintName = "DataKit"
@@ -38,6 +52,16 @@
                ReferencedContainer = "container:DataKit.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DataKit::base64cTests"
+               BuildableName = "base64cTests.xctest"
+               BlueprintName = "base64cTests"
+               ReferencedContainer = "container:DataKit.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <AdditionalOptions>
       </AdditionalOptions>
@@ -55,9 +79,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "DataKit::DataKit"
-            BuildableName = "DataKit.framework"
-            BlueprintName = "DataKit"
+            BlueprintIdentifier = "DataKit::base64c"
+            BuildableName = "base64c.framework"
+            BlueprintName = "base64c"
             ReferencedContainer = "container:DataKit.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

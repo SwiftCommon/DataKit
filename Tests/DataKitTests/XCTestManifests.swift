@@ -7,7 +7,7 @@ public func allTests() -> [XCTestCaseEntry] {
         testCase(DataExtASCIIStringTests.allTests),
         testCase(DataExtHexStringTests.allTests),
         testCase(DataExtUTF8StringTests.allTests),
-        testCase(Data64Tests.allTests)
+        testCase(Base64Tests.allTests)
     ]
 }
 #endif
