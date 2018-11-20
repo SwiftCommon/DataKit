@@ -108,7 +108,7 @@ module Fastlane
       end
 
       def self.package_commands
-        %w(clean reset update generate-xcodeproj init)
+        %w(clean reset update generate-xcodeproj init resolve)
       end
 
       def self.valid_configurations
