@@ -20,7 +20,7 @@ final class DataExtUTF8StringTests: XCTestCase {
         expect(data?.utf8string).to(beNil())
     }
 
-    static var allTests = [
+    static let allTests = [
         ("testUTF8String", testUTF8String),
         ("testIncompatibleData", testIncompatibleData)
     ]

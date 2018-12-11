@@ -262,6 +262,7 @@ DEPENDENCIES
   danger-swiftlint
   fastlane
   jazzy
+  xcodeproj
 
 BUNDLED WITH
    1.16.1

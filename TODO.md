@@ -2,7 +2,8 @@
 
 - [x] Swiftlint integration
 - [x] Setup CI
-- [ ] Base64 implementation
+- [x] Base64 implementation
+- [ ] Base64 decoding performance
 - [ ] Write contributing guidelines
 - [ ] Write *Installation* paragraph in README.md
 - [x] Danger code checking integration

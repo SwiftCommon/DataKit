@@ -42,7 +42,7 @@ final class DataExtHexStringTests: XCTestCase {
         }.to(throwError(HexStringParsingError.illegalCharacters(pattern: hexString)))
     }
 
-    static var allTests = [
+    static let allTests = [
         ("testHexString_no_separator", testHexString_no_separator),
         ("testHexString_with_separator", testHexString_with_separator),
         ("testHexStringToData", testHexStringToData),

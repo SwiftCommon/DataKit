@@ -75,6 +75,7 @@ lane :update_xcodeproj do |options|
     command: "generate-xcodeproj",
     xcconfig: "Package.xcconfig"
   )
+  fix_xcodeproj_config
 end
 
 desc "Runs all tests for the given environment"
@@ -167,6 +168,24 @@ lane :build_example do |options|
     configuration: options[:configuration],
     build_settings: [["ONLY_ACTIVE_ARCH", "NO"]]
   )
+end
+
+desc "Fix Xcodeproj build configuration where needed"
+desc "Set Swift Bridging Header for Benchmark target"
+desc "Access: private"
+desc ""
+lane :fix_xcodeproj_config do |options|
+   # Open the project
+   project = Xcodeproj::Project.open("../DataKit.xcodeproj")
+   targets = project.targets.select { |target| target.name == "DataKitBenchmark" }
+   targets.each do |target|
+     target.build_configurations.each do |config|
+       # Add the BridgingHeader to the target build settings
+       config.build_settings['SWIFT_OBJC_BRIDGING_HEADER'] ||= 'Tests/DataKitTestsBridgingHeader.h'
+     end
+  end
+  # Save the project
+  project.save
 end
 
 # More information about multiple platforms in fastlane: https://github.com/KrauseFx/fastlane/blob/master/docs/Platforms.md
