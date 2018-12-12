@@ -1,30 +1,44 @@
+# Display a friendly welcoming message to non-contributors
+contributors = github.api.contributors("SwiftCommon/DataKit").map { |user| user.login }
+
+unless contributors.include? github.pr_author
+  message "Hi @#{github.pr_author} 👋! Thank you for contributing to SwiftCommon/DataKit! I'm the CautionWarningBot triggered by the CI for this project, and will assist you is getting this PR merged ☀️"
+end
 
 # Ignore/override Danger assertions that fail the build with the PR description.
 declared_dev_known = (github.pr_body).include?("#known")
-warn "Developer overridden Danger assertions. Shown as warnings still." if declared_dev_known
+warn "Developer overridden Danger assertions. Shown as warnings still. 🤷‍♂️" if declared_dev_known
 
 # Check for protected files updated
-files.protect_files(path: "Dangerfile", message: "Dangerfile modified", fail_build: false)
-files.protect_files(path: ".swiftlint.yml", message: ".swiftlint modified", fail_build: false)
-files.protect_files(path: ".jazzy.yml", message: ".jazzy modified", fail_build: false)
-files.protect_files(path: ".gitignore", message: ".gitignore modified", fail_build: false)
-files.protect_files(path: "LICENSE", message: "LICENSE modified", fail_build: !declared_dev_known)
-files.protect_files(path: ".travis.yml", message: "Travis-CI configuration modified", fail_build: !declared_dev_known)
+files.protect_files(path: "Dangerfile", message: "📛 Dangerfile modified", fail_build: false)
+files.protect_files(path: ".swiftlint.yml", message: "💄 .swiftlint modified", fail_build: false)
+files.protect_files(path: ".jazzy.yml", message: "🎵 .jazzy modified", fail_build: false)
+files.protect_files(path: ".gitignore", message: "🙈 .gitignore modified", fail_build: false)
+files.protect_files(path: "LICENSE", message: "📃 LICENSE modified", fail_build: !declared_dev_known)
+files.protect_files(path: ".travis.yml", message: "👷‍♀️ Travis-CI configuration modified", fail_build: !declared_dev_known)
 
+# Protect fastlane .env files
+files.protect_files(path: "fastlane/.env", message: "🏎  Fastlane file modified (.env)", fail_build: !declared_dev_known)
+files.protect_files(path: "fastlane/.env.default", message: "🏎  Fastlane file modified (.env.default)", fail_build: !declared_dev_known)
+files.protect_files(path: "fastlane/.env.ios12_xcode10", message: "🏎  Fastlane file modified (.env.ios12_xcode10)", fail_build: !declared_dev_known)
+files.protect_files(path: "fastlane/.env.osx", message: "🏎  Fastlane file modified (.env.osx)", fail_build: !declared_dev_known)
+files.protect_files(path: "fastlane/Fastfile", message: "🏎  Fastlane file modified (Fastfile)", fail_build: !declared_dev_known)
+
+# Log an error or warning when developer declared #known in pr body
 def failOrWarn(text, declared_dev_known)
   fail text unless declared_dev_known
-  warn "[KNOWN] #{text}" if declared_dev_known
+  warn "[KNOWN 🤫] #{text}" if declared_dev_known
 end
 
 # Ensure a clean commits history
 if git.commits.any? { |c| c.message =~ /^Merge branch '#{github.branch_for_base}'/ }
-  failOrWarn("Please rebase to get rid of the merge commits in this PR", declared_dev_known)
+  failOrWarn("Please rebase to get rid of the merge commits in this PR 🙏", declared_dev_known)
 end
 
 # Mainly to encourage writing up some reasoning about the PR, rather than
 # just leaving a title
 if github.pr_body.length < 15
-  failOrWarn("Please provide a summary in the Pull Request description", declared_dev_known)
+  failOrWarn("Please provide a summary in the Pull Request description ✍️", declared_dev_known)
 end
 
 modified_files = git.modified_files + git.added_files
@@ -39,11 +53,11 @@ modified_files_not_docs = git.diff.stats[:files].select { |info|
   {:file => file, :changes => stats[:insertions] + stats[:deletions] }
 }
 modified_lines_not_docs = modified_files_not_docs.map { |info| info[:changes] }.reduce { |acc, changes| acc + changes }
-warn "Big PR, consider splitting into smaller" if modified_lines_not_docs > 400
+warn "Your PR has over 400 lines of code changes 😱 (excluding docs/ and DataKit.xcodeproj/). Please consider splitting into separate PRs if possible 👍" if modified_lines_not_docs > 400
 
 # If these are all empty something has gone wrong, better to raise it in a comment
 if modified_files.empty? && git.deleted_files.empty?
-  failOrWarn("This PR has no changes at all, this is likely an issue during development.", !declared_dev_known)
+  failOrWarn("This PR has no changes at all 🧐, this is likely an issue during development. 🚧", !declared_dev_known)
 end
 
 # Sometimes its a README fix, or something like that - which isn't relevant for
@@ -56,19 +70,19 @@ declared_trivial = (github.pr_title + github.pr_body).include?("#trivial") || !h
 
 # Add a CHANGELOG entry for app changes
 if !modified_files.include?('CHANGELOG.md') && has_app_changes && !declared_trivial
-  warn("Please include a CHANGELOG entry to credit yourself! \nYou can find it at [CHANGELOG.md](https://github.com/SwiftCommon/DataKit/blob/master/CHANGELOG.md).")
+  warn("Please include a CHANGELOG entry to credit yourself! 🤗 \nYou can find it at [CHANGELOG.md](https://github.com/SwiftCommon/DataKit/blob/master/CHANGELOG.md).")
 end
 
 # If changes are more than 50 lines of code, tests might need to be updated too
 if has_app_changes && !has_test_changes && modified_lines_not_docs > 50
-  warn("Tests were not updated", sticky: false)
+  warn("Tests were not updated 🤨, are you sure all is still tested? Codecov.io 🕵️‍♂️ will hunt you down if not...", sticky: false)
 end
 
 # Warn for missing docs update
 missing_doc_changes = modified_files.grep(/docs/).empty?
 doc_changes_recommended = git.insertions > 15
 if has_app_changes && missing_doc_changes && doc_changes_recommended && !declared_trivial
-  warn("Consider adding supporting documentation to this change. Documentation can be found in the `docs` directory. And can be generated with `$ jazzy --config .jazzy.yml`")
+  warn("Consider adding supporting documentation to this change 📖. Documentation can be found in the `docs` directory.\n👉 And can be generated with `$ jazzy --config .jazzy.yml`")
 end
 
 # Check when Gemfile is updated that the Gemfile.lock file is also updated
@@ -76,7 +90,7 @@ gem_updated = manifest.manifest_file(name: "Gemfile", path: /Gemfile/, modified_
 gem_lock_updated = manifest.manifest_file(name: "Gemfile.lock", path: /Gemfile.lock/, modified_file_list: modified_files)
 
 if (!gem_updated.updated && gem_lock_updated.updated) || (gem_updated.updated && !gem_lock_updated.updated)
-  failOrWarn("Gemfile or Gemfile.lock is updated, but not both.", declared_dev_known)
+  failOrWarn("Gemfile or Gemfile.lock is updated, but not both. 🤥", declared_dev_known)
 end
 
 # Warn when any of the package manifest(s) updated but not others
