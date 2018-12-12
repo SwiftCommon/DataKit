@@ -16,7 +16,7 @@
       <div class="content-wrapper">
         <p>
           <a href="index.html">DataKit Docs</a>
-          <span class="no-mobile"> (100% documented)</span>
+          <span class="no-mobile"> (96% documented)</span>
         </p>
     
         <p class="header-right">
@@ -54,6 +54,35 @@
 
 <p>Swift µframework for Data operations.</p>
 <h2 id='features' class='heading'>Features</h2>
+<h3 id='data-base64' class='heading'>Data+Base64</h3>
+
+<ul>
+<li>Base64 encode data blob</li>
+</ul>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">data</span> <span class="o">=</span> <span class="kt">Data</span><span class="p">(</span><span class="nv">bytes</span><span class="p">:</span> <span class="p">[</span><span class="mh">0xc3</span><span class="p">,</span> <span class="mh">0x98</span><span class="p">,</span> <span class="mh">0x61</span><span class="p">,</span> <span class="mh">0x62</span><span class="p">,</span> <span class="mh">0x63</span><span class="p">,</span> <span class="mh">0x64</span><span class="p">])</span>
+<span class="k">let</span> <span class="nv">base64encoded</span> <span class="o">=</span> <span class="kt">Base64</span><span class="o">.</span><span class="n">base64</span><span class="o">.</span><span class="nf">encode</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
+</code></pre>
+
+<ul>
+<li>Base64 (URL and File safe) encode data</li>
+</ul>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">data</span> <span class="o">=</span> <span class="kt">Data</span><span class="p">(</span><span class="nv">bytes</span><span class="p">:</span> <span class="p">[</span><span class="mh">0xc3</span><span class="p">,</span> <span class="mh">0x98</span><span class="p">,</span> <span class="mh">0x61</span><span class="p">,</span> <span class="mh">0x62</span><span class="p">,</span> <span class="mh">0x63</span><span class="p">,</span> <span class="mh">0x64</span><span class="p">])</span>
+<span class="k">let</span> <span class="nv">urlSafeEncoded</span> <span class="o">=</span> <span class="kt">Base64</span><span class="o">.</span><span class="n">urlSafe</span><span class="o">.</span><span class="nf">encode</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="n">data</span><span class="p">,</span> <span class="nv">padding</span><span class="p">:</span> <span class="o">.</span><span class="k">none</span><span class="p">)</span>
+</code></pre>
+
+<ul>
+<li>Base64 decode data blob</li>
+</ul>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">base64</span> <span class="o">=</span> <span class="kt">Data</span><span class="p">(</span><span class="nv">bytes</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x75</span><span class="p">,</span> <span class="mh">0xF7</span><span class="p">,</span> <span class="mh">0xAB</span><span class="p">,</span> <span class="mh">0xE7</span><span class="p">,</span> <span class="mh">0xAE</span><span class="p">,</span> <span class="mh">0x9F</span><span class="p">,</span> <span class="mh">0x14</span><span class="p">,</span> <span class="mh">0x38</span><span class="p">,</span> <span class="mh">0x63</span><span class="p">,</span> <span class="mh">0x7C</span><span class="p">,</span> <span class="mh">0x50</span><span class="p">,</span> <span class="mh">0xD2</span><span class="p">,</span> <span class="mh">0xB2</span><span class="p">,</span> <span class="mh">0xCC</span><span class="p">,</span> <span class="mh">0x2B</span><span class="p">,</span> <span class="mh">0xAF</span><span class="p">,</span> <span class="mh">0x0C</span><span class="p">,</span> <span class="mh">0x30</span><span class="p">])</span>
+<span class="k">let</span> <span class="nv">data</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">Base64</span><span class="o">.</span><span class="nf">decode</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="n">base64</span><span class="p">)</span> <span class="c1">// Base64 decoded data or error</span>
+</code></pre>
+
+<ul>
+<li>Base64 decode string</li>
+</ul>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">base64</span> <span class="o">=</span> <span class="s">"dfer566fFDhjfFDSsswrrwwwwsd"</span>
+<span class="k">let</span> <span class="nv">data</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">Base64</span><span class="o">.</span><span class="nf">decode</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="n">base64</span><span class="p">)</span> <span class="c1">// Base64 decoded data or error</span>
+</code></pre>
 <h3 id='data-string' class='heading'>Data+String</h3>
 
 <ul>
@@ -96,7 +125,7 @@
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     you may have to update the Xcode project file and fix the <code>Package.swift</code> dependencies used by this project. You can do so by running:<br>
-<code>$ bundle exec fastlane update_xcodeproj</code>
+<code>$ bundle install &amp;&amp; bundle exec fastlane gen_xcodeproj</code>
 
 </div>
 <h2 id='license' class='heading'>License</h2>
@@ -117,7 +146,13 @@
                   <a href="Enums/Base64.html">Base64</a>
                 </li>
                 <li class="nav-group-task">
-                  <a href="Enums/Base64Padding.html">Base64Padding</a>
+                  <a href="Enums/Base64/Mode.html">– Mode</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Enums/Base64/Padding.html">– Padding</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Enums/Base64/Error.html">– Error</a>
                 </li>
                 <li class="nav-group-task">
                   <a href="Enums/HexStringParsingError.html">HexStringParsingError</a>
@@ -140,7 +175,7 @@
       </div>
       <div class="footer-wrapper">
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://nxtstep.nl" target="_blank" rel="external">Adriaan (Arjan) Duijzer - SwiftCommon</a>. All rights reserved. (Last updated: 2018-11-18)</p>
+          <p>&copy; 2018 <a class="link" href="https://nxtstep.nl" target="_blank" rel="external">Adriaan (Arjan) Duijzer - SwiftCommon</a>. All rights reserved. (Last updated: 2018-12-12)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </div>

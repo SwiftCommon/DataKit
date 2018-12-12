@@ -9,4 +9,4 @@ xcodebuild_arguments:
   - "-project"
   - 'DataKit.xcodeproj'
   - "-scheme"
-  - 'DataKit'
+  - 'DataKit-Package'
