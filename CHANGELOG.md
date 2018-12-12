@@ -11,3 +11,7 @@
 * [Added] Data.utf8string
 * [Added] Data.hexString()
 * [Added] Data.init(hex:)
+* [Added] Base64.decode(data: Data) -> Data
+* [Added] Base64.decode(string: String) -> Data
+* [Added] Base64.base64.encode(data: Data) -> Data
+* [Added] Base64.urlSafe.encode(data: Data) -> Data

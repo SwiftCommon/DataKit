@@ -10,6 +10,36 @@ Swift µframework for Data operations.
 Features
 --------
 
+### Data+Base64
+
+- Base64 encode data blob
+
+```swift
+let data = Data(bytes: [0xc3, 0x98, 0x61, 0x62, 0x63, 0x64])
+let base64encoded = Base64.base64.encode(data: data)
+```
+
+- Base64 (URL and File safe) encode data
+
+```swift
+let data = Data(bytes: [0xc3, 0x98, 0x61, 0x62, 0x63, 0x64])
+let urlSafeEncoded = Base64.urlSafe.encode(data: data, padding: .none)
+```
+
+- Base64 decode data blob
+
+```swift
+let base64 = Data(bytes: [0x75, 0xF7, 0xAB, 0xE7, 0xAE, 0x9F, 0x14, 0x38, 0x63, 0x7C, 0x50, 0xD2, 0xB2, 0xCC, 0x2B, 0xAF, 0x0C, 0x30])
+let data = try Base64.decode(data: base64) // Base64 decoded data or error
+```
+
+- Base64 decode string
+
+```swift
+let base64 = "dfer566fFDhjfFDSsswrrwwwwsd"
+let data = try Base64.decode(string: base64) // Base64 decoded data or error
+```
+
 ### Data+String
 
 - Convert Data to UTF-8 or ASCII String
@@ -59,7 +89,7 @@ Contributing
 Feel free to check the [TODO](./TODO.md) list and/or add your favourite missing Data related feature through a Pull request.
 
 * Note: you may have to update the Xcode project file and fix the `Package.swift` dependencies used by this project. You can do so by running:  
-`$ bundle exec fastlane update_xcodeproj`
+`$ bundle install && bundle exec fastlane gen_xcodeproj`
 
 License
 -------
