@@ -138,6 +138,13 @@ Set Swift Bridging Header for Benchmark target
 Access: private
 
 
+### gen_docs
+```
+fastlane gen_docs
+```
+Run the jazzy documentation generator
+
+
 
 ----
 

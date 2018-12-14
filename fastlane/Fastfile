@@ -64,6 +64,9 @@ lane :ci_build do |options|
   if ENV["EXAMPLE_WORKSPACE"] && ENV["EXAMPLE_SCHEME"]
     build_example(configuration: configuration)
   end
+
+  # Generate the documentation
+  gen_docs
 end
 
 desc "Update the xcodeproj to fix the Swift Package manager dependency path(s)"
@@ -175,17 +178,44 @@ desc "Set Swift Bridging Header for Benchmark target"
 desc "Access: private"
 desc ""
 lane :fix_xcodeproj_config do |options|
-   # Open the project
-   project = Xcodeproj::Project.open("../DataKit.xcodeproj")
-   targets = project.targets.select { |target| target.name == "DataKitBenchmark" }
-   targets.each do |target|
-     target.build_configurations.each do |config|
-       # Add the BridgingHeader to the target build settings
-       config.build_settings['SWIFT_OBJC_BRIDGING_HEADER'] ||= 'Tests/DataKitTestsBridgingHeader.h'
-     end
+  # Open the project
+  project = Xcodeproj::Project.open("../DataKit.xcodeproj")
+  targets = project.targets.select { |target| target.name == "DataKitBenchmark" }
+  targets.each do |target|
+    target.build_configurations.each do |config|
+      # Add the BridgingHeader to the target build settings
+      config.build_settings['SWIFT_OBJC_BRIDGING_HEADER'] ||= 'Sources/DataKitBenchmark/BenchmarkBridgingHeader.h'
+    end
   end
+  # add DataKit Scheme for iOS builds, since they don't have command line tool targets
+  schemes_path = Dir[File.join(project.path, 'xcshareddata', 'xcschemes', '*.xcscheme')]
+  schemes_path.select do |scheme_path|
+    File.basename(scheme_path, '.xcscheme') == ENV["SC_OSX_FRAMEWORK_SCHEME"]
+  end.each do |scheme_path|
+    # Read into XCScheme
+    scheme = Xcodeproj::XCScheme.new scheme_path
+    build_action = Xcodeproj::XCScheme::BuildAction::new
+    scheme.build_action.entries.select do |entry|
+      entry.buildable_references.select do |reference|
+        reference.target_name == ENV["SC_IOS_FRAMEWORK_TARGET"]
+      end.length > 0
+      # references.length > 0
+    end.each do |entry|
+      build_action.add_entry entry
+    end
+    scheme.build_action = build_action
+    # Save as IOS SC_IOS_FRAMEWORK_SCHEME, true = shared
+    scheme.save_as(project.path, ENV["SC_IOS_FRAMEWORK_SCHEME"], true)
+  end
+
   # Save the project
   project.save
+end
+
+desc "Run the jazzy documentation generator"
+desc ""
+lane :gen_docs do |options|
+  jazzy(config: ".jazzy.yml")
 end
 
 # More information about multiple platforms in fastlane: https://github.com/KrauseFx/fastlane/blob/master/docs/Platforms.md
