@@ -61,10 +61,12 @@ public enum Base64 {
             var ctr = 0
             var byte: Int
             var char: UInt8
+
+            let table = Base64.asciiTable
             // Loop through the data set and scan the chars for validity based on the current [decoding] mode
             for idx in 0..<data.count {
                 byte = Int(data[idx])
-                char = Base64.asciiTable[byte]
+                char = table[byte]
                 if char == 0x40 {
                     // char is out of valid Base64 range
                     if !skip(invalid: data[idx]) {
@@ -80,11 +82,6 @@ public enum Base64 {
             }
 
             return ctr > 0 ? (ctr / 4) * 3 + 1 : 0
-        }
-
-        internal func isValid(char: UInt8) -> Bool {
-            let idx = Int(char)
-            return Base64.asciiTable[idx] != 0x40
         }
 
         /**
@@ -129,7 +126,7 @@ public enum Base64 {
                 }
             }
 
-            if lineFeeds > 0 && encodedLength > 0 {
+            if lineFeeds > 0 {
                 return encodedLength + (encodedLength / lineFeeds)
             } else {
                 return encodedLength
@@ -150,17 +147,17 @@ public enum Base64 {
     /// - Returns: the Base64 encoded data blob
     public func encode(data: Data, with padding: Padding = .padding, lineFeeds: Int = 0) -> Data {
         // Length needed to encode data
-        let outLength = padding.encodedLength(data, lineFeeds: lineFeeds)
+        let outlen = padding.encodedLength(data, lineFeeds: lineFeeds)
         // Original input length
-        let inLength = data.count
+        let inlen = data.count
         // Data buffer that stores the encoded bytes
-        let dataPtr = UnsafeMutablePointer<CChar>.allocate(capacity: outLength)
+        let dataPtr = UnsafeMutablePointer<CChar>.allocate(capacity: outlen)
         // Lookup character table
         let characterTable = self.table.utf8CString
 
         // Pad the last 2 output bytes just in case padding would be needed. If not, the bytes will be overridden later.
-        dataPtr[outLength - 2] = characterTable[0x40]
-        dataPtr[outLength - 1] = characterTable[0x40]
+        dataPtr[outlen - 2] = characterTable[0x40]
+        dataPtr[outlen - 1] = characterTable[0x40]
 
         // pointer to the input data backing buffer
         _ = data.withUnsafeBytes { (bytes: UnsafePointer<UInt8>) -> Int in
@@ -171,14 +168,14 @@ public enum Base64 {
                 buffer.deallocate()
             }
             // Overall bytes that need encoding
-            var bytesRemaining: Int = inLength
+            var bytesRemaining: Int = inlen
             // Every step (iteration) of 3 bytes; outputs 4. To keep the output index in sync we add this extra to the
             // output index.
             var extra = 0
             var addedLineFeeds = 0
             // Encode the input byte buffer step-by-step with steps of 3 bytes at a time
             let stepSize = 3
-            for idx in stride(from: 0, to: inLength, by: stepSize) {
+            for idx in stride(from: 0, to: inlen, by: stepSize) {
                 // Space to fill for this pass is stepSize or bytesRemaining when latter is lesser.
                 bufferSize = min(stepSize, bytesRemaining)
                 // Fill the buffer with the input bytes
@@ -221,7 +218,7 @@ public enum Base64 {
         }
 
         // Manage the unsafe dataPtr
-        return Data(bytesNoCopy: dataPtr, count: outLength, deallocator: .free)
+        return Data(bytesNoCopy: dataPtr, count: outlen, deallocator: .free)
     }
 
     /// Base64 decode String
@@ -295,6 +292,8 @@ public enum Base64 {
             return len - needle
         }
 
+        let table = Base64.asciiTable
+
         // Output buffer pointer
         var ptr = 0
         repeat {
@@ -303,7 +302,7 @@ public enum Base64 {
                 // fill the buffer - to skip over characters when necessary
                 let nextByte = bytes[needle]
                 if nextByte != 0x3d {
-                    if mode.isValid(char: nextByte) {
+                    if table[Int(nextByte)] < 0x40 {
                         buffer[bufferSize] = nextByte
                         bufferSize += 1
                     } else if !mode.skip(invalid: nextByte) {
@@ -323,15 +322,15 @@ public enum Base64 {
             // Decode the buffer
             if bufferSize > 0 {
                 if bufferSize > 1 {
-                    dataPtr[ptr] = Base64.asciiTable[Int(buffer[0])] << 2 | Base64.asciiTable[Int(buffer[1])] >> 4
+                    dataPtr[ptr] = table[Int(buffer[0])] << 2 | table[Int(buffer[1])] >> 4
                     ptr += 1
                 }
                 if bufferSize > 2 {
-                    dataPtr[ptr] = Base64.asciiTable[Int(buffer[1])] << 4 | Base64.asciiTable[Int(buffer[2])] >> 2
+                    dataPtr[ptr] = table[Int(buffer[1])] << 4 | table[Int(buffer[2])] >> 2
                     ptr += 1
                 }
                 if bufferSize > 3 {
-                    dataPtr[ptr] = Base64.asciiTable[Int(buffer[2])] << 6 | Base64.asciiTable[Int(buffer[3])]
+                    dataPtr[ptr] = table[Int(buffer[2])] << 6 | table[Int(buffer[3])]
                     ptr += 1
                 }
             }

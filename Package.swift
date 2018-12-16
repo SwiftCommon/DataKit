@@ -10,6 +10,10 @@ let package = Package(
         .library(
             name: "DataKit",
             targets: ["DataKit"]
+        ),
+        .executable(
+            name: "DataKitBenchmark",
+            targets: ["DataKitBenchmark"]
         )
     ],
     dependencies: [
@@ -25,7 +29,7 @@ let package = Package(
             name: "DataKitTests",
             dependencies: ["DataKit", "Nimble"]
         ),
-        .testTarget(
+        .target(
             name: "DataKitBenchmark",
             dependencies: ["DataKit"]
         )
