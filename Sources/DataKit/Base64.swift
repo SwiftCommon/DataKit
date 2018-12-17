@@ -59,29 +59,30 @@ public enum Base64 {
          */
         public func decodedLength(_ data: Data) -> Int {
             var ctr = 0
-            var byte: Int
-            var char: UInt8
 
             let table = Base64.asciiTable
             // Loop through the data set and scan the chars for validity based on the current [decoding] mode
-            for idx in 0..<data.count {
-                byte = Int(data[idx])
-                char = table[byte]
-                if char == 0x40 {
-                    // char is out of valid Base64 range
-                    if !skip(invalid: data[idx]) {
-                        // If we choose NOT to skip the char it better be a padding char
-                        if data[idx] != 0x3d {
-                            return -1
+            return data.withUnsafeBytes { (bytes: UnsafePointer<UInt8>) -> Int in
+                for idx in 0..<data.count {
+                    let byte = bytes[idx]
+                    let idxByte = Int(byte)
+                    let char = table[idxByte]
+                    if char == 0x40 {
+                        // char is out of valid Base64 range
+                        if !skip(invalid: byte) {
+                            // If we choose NOT to skip the char it better be a padding char
+                            if byte != 0x3d {
+                                return -1
+                            }
+                            break
                         }
-                        break
+                    } else {
+                        ctr += 1
                     }
-                } else {
-                    ctr += 1
                 }
+                return ctr > 0 ? (ctr / 4) * 3 + 1 : 0
             }
 
-            return ctr > 0 ? (ctr / 4) * 3 + 1 : 0
         }
 
         /**
@@ -96,11 +97,13 @@ public enum Base64 {
             case .failOnInvalidCharacters:
                 return false
             case .ignoreWhiteSpaceAndNewline:
-                return CharacterSet.whitespacesAndNewlines.contains(UnicodeScalar(char))
+                return Mode.whiteSpaceAndNewlines.contains(UnicodeScalar(char))
             case .ignoreInvalidCharacters:
                 return char != 0x3d // 0x3d = '=' padding character
             }
         }
+
+        static let whiteSpaceAndNewlines = CharacterSet.whitespacesAndNewlines
     }
 
     /// Encoding options
@@ -253,25 +256,27 @@ public enum Base64 {
     ///
     /// - Returns: base64 decoded data
     public static func decode(data: Data, mode: Mode = .failOnInvalidCharacters) throws -> Data {
-        let input = data
-        let decodedLength = mode.decodedLength(input)
-        if decodedLength < 0 {
-            throw Error.invalidBase64String
-        }
-        guard decodedLength > 0 else {
+        let inlen = data.count
+        guard inlen > 0 else {
             /// No bytes to decode
             return Data()
         }
 
         // Data buffer that stores the decoded bytes
+        let decodedLength = ((inlen + 3) / 4) * 3
         let dataPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: decodedLength)
         // Get the byte buffer to the encoded data
-        let outLength = try input.withUnsafeBytes { (bytes: UnsafePointer<UInt8>) -> Int in
-            return try decode(buffer: bytes, output: dataPtr, len: input.count, mode: mode)
+        let outlen = try data.withUnsafeBytes { (bytes: UnsafePointer<UInt8>) -> Int in
+            do {
+                return try decode(buffer: bytes, output: dataPtr, len: data.count, mode: mode)
+            } catch let error {
+                dataPtr.deallocate()
+                throw error
+            }
         }
 
         // Manage the unsafe dataPtr
-        return Data(bytesNoCopy: dataPtr, count: outLength, deallocator: .free)
+        return Data(bytesNoCopy: dataPtr, count: outlen, deallocator: .free)
     }
 
     private static func decode(
@@ -288,7 +293,7 @@ public enum Base64 {
         }
 
         // Number of characters to decode
-        var bytesLeft: () -> Int = {
+        let bytesLeft: () -> Int = {
             return len - needle
         }
 
@@ -307,9 +312,6 @@ public enum Base64 {
                         bufferSize += 1
                     } else if !mode.skip(invalid: nextByte) {
                         // abort decoding, we've encountered a bad char and we're not allowed to continue
-                        defer {
-                            dataPtr.deallocate()
-                        }
                         throw Error.invalidBase64String
                     }
                     needle += 1
