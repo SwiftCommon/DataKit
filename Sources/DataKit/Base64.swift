@@ -51,12 +51,10 @@ public enum Base64 {
         /// Just ignore all non-base64 chars
         case ignoreInvalidCharacters
 
-        /**
-            Calculate the number of bytes needed to Base64 decode the given data blob
-
-            - Parameter data: Base64 encoded data
-            - Returns: number of bytes needed for decoded data
-         */
+        /// Calculate the number of bytes needed to Base64 decode the given data blob
+        ///
+        /// - Parameter data: Base64 encoded data
+        /// - Returns: number of bytes needed for decoded data
         public func decodedLength(_ data: Data) -> Int {
             var ctr = 0
 
@@ -85,13 +83,11 @@ public enum Base64 {
 
         }
 
-        /**
-            Check whether we should skip an invalid char or escalate
-
-            - Discussion: whether we should just ignore/skip the char based on the mode
-            - Parameter char: the invalid cchar
-            - Returns: true to skip/ignore the invalid char
-         */
+        /// Check whether we should skip an invalid char or escalate
+        ///
+        /// - Discussion: whether we should just ignore/skip the char based on the mode
+        /// - Parameter char: the invalid char
+        /// - Returns: true to skip/ignore the invalid char
         internal func skip(invalid char: UInt8) -> Bool {
             switch self {
             case .failOnInvalidCharacters:
@@ -117,7 +113,7 @@ public enum Base64 {
         ///
         /// - Parameters:
         ///     - data: the data to calculate the necessary encoding length needed for
-        ///     - lineFeeds: the interval at which new lines character needs to be inserted
+        ///     - lineFeeds: number of base64 characters per line, e.g. newline breakpoint. 0 = default - no breaking
         /// - Returns: the encoded byte length needed for Base64 encoding
         public func encodedLength(_ data: Data, lineFeeds: Int = 0) -> Int {
             var encodedLength = ((data.count + 2) / 3) * 4
@@ -139,6 +135,7 @@ public enum Base64 {
 
     /// Base64 Error
     public enum Error: Swift.Error {
+        /// Invalid Base64 character encountered
         case invalidBase64String
     }
 
@@ -147,6 +144,7 @@ public enum Base64 {
     /// - Parameters:
     ///     - data: the blob to encode
     ///     - padding: padding mode for encoding (default: .padding)
+    ///     - lineFeeds: number of base64 characters per line, e.g. newline breakpoint. 0 = default - no breaking
     /// - Returns: the Base64 encoded data blob
     public func encode(data: Data, with padding: Padding = .padding, lineFeeds: Int = 0) -> Data {
         // Length needed to encode data
