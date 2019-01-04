@@ -82,6 +82,11 @@ Installation
    ]
 ```
 
+Documentation
+-------------
+
+To create the documentation run: `bundle exec fastlane gen_docs` and open `./docs/index.html`
+
 
 Contributing
 ------------

@@ -18,12 +18,12 @@ let resourcesPath: URL = {
             .appendingPathComponent("Tests/DataKitTests/Resources")
 }()
 
-//swiftlint:disable:next force_try
-let plainLoremIpsum = try! Data(contentsOf: resourcesPath.appendingPathComponent("PlainLoremIpsum.txt"))
-
 func resource(file path: String) -> URL {
     return resourcesPath.appendingPathComponent(path)
 }
+
+//swiftlint:disable:next force_try
+let plainLoremIpsum = try! Data(contentsOf: resource(file: "PlainLoremIpsum.txt"))
 
 /// Mark: Benchmark
 
