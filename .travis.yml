@@ -18,8 +18,6 @@ matrix:
 before_install:
   - gem install bundler -v 1.17.3 --no-rdoc --no-ri --no-document --quiet
   - brew install swiftlint
-  - bundle env
-  - bundle install
 before_script:
   - set -o pipefail
   - if [ "$TRAVIS_PULL_REQUEST" != "false" -a "$FASTLANE_LANE" == "code_coverage" ]; then
