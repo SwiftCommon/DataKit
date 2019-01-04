@@ -290,37 +290,30 @@ public enum Base64 {
             buffer.deallocate()
         }
 
-        // Number of characters to decode
-        let bytesLeft: () -> Int = {
-            return len - needle
-        }
-
-        let table = Base64.asciiTable
-
-        // Output buffer pointer
-        var ptr = 0
-        repeat {
-            bufferSize = 0
+        return try Base64.asciiTable.withUnsafeBytes { table in
+            // Output buffer pointer
+            var ptr = 0
             repeat {
-                // fill the buffer - to skip over characters when necessary
-                let nextByte = bytes[needle]
-                if nextByte != 0x3d {
-                    if table[Int(nextByte)] < 0x40 {
-                        buffer[bufferSize] = nextByte
-                        bufferSize += 1
-                    } else if !mode.skip(invalid: nextByte) {
-                        // abort decoding, we've encountered a bad char and we're not allowed to continue
-                        throw Error.invalidBase64String
+                bufferSize = 0
+                repeat {
+                    // fill the buffer - to skip over characters when necessary
+                    let nextByte = bytes[needle]
+                    if nextByte != 0x3d {
+                        if table[Int(nextByte)] < 0x40 {
+                            buffer[bufferSize] = nextByte
+                            bufferSize += 1
+                        } else if !mode.skip(invalid: nextByte) {
+                            // abort decoding, we've encountered a bad char and we're not allowed to continue
+                            throw Error.invalidBase64String
+                        }
+                        needle += 1
+                    } else {
+                        // padding '=' char encountered (end-of-stream)
+                        needle = len
                     }
-                    needle += 1
-                } else {
-                    // padding '=' char encountered (end-of-stream)
-                    needle = len
-                }
-            } while bufferSize < 4 && bytesLeft() > 0
+                } while bufferSize < 4 && len - needle > 0
 
-            // Decode the buffer
-            if bufferSize > 0 {
+                // Decode the buffer
                 if bufferSize > 1 {
                     dataPtr[ptr] = table[Int(buffer[0])] << 2 | table[Int(buffer[1])] >> 4
                     ptr += 1
@@ -333,8 +326,8 @@ public enum Base64 {
                     dataPtr[ptr] = table[Int(buffer[2])] << 6 | table[Int(buffer[3])]
                     ptr += 1
                 }
-            }
-        } while bytesLeft() > 0
-        return ptr
+            } while len - needle > 0
+            return ptr
+        }
     }
 }

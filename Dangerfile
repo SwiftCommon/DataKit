@@ -79,11 +79,11 @@ if has_app_changes && !has_test_changes && modified_lines_not_docs > 50
 end
 
 # Warn for missing docs update
-missing_doc_changes = modified_files.grep(/docs/).empty?
-doc_changes_recommended = git.insertions > 15
-if has_app_changes && missing_doc_changes && doc_changes_recommended && !declared_trivial
-  warn("Consider adding supporting documentation to this change 📖. Documentation can be found in the `docs` directory.\n👉 And can be generated with `$ jazzy --config .jazzy.yml`")
-end
+#missing_doc_changes = modified_files.grep(/docs/).empty?
+#doc_changes_recommended = git.insertions > 15
+#if has_app_changes && missing_doc_changes && doc_changes_recommended && !declared_trivial
+#  warn("Consider adding supporting documentation to this change 📖. Documentation can be found in the `docs` directory.\n👉 And can be generated with `$ jazzy --config .jazzy.yml`")
+#end
 
 # Check when Gemfile is updated that the Gemfile.lock file is also updated
 gem_updated = manifest.manifest_file(name: "Gemfile", path: /Gemfile/, modified_file_list: modified_files)
