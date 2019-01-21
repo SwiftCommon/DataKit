@@ -16,7 +16,7 @@ Features
 
 ```swift
 let data = Data(bytes: [0xc3, 0x98, 0x61, 0x62, 0x63, 0x64])
-let base64encoded = Base64.base64.encode(data: data)
+let base64encoded = Base64.standard.encode(data: data)
 ```
 
 - Base64 (URL and File safe) encode data

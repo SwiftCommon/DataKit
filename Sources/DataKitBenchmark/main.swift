@@ -63,7 +63,7 @@ func testNSDataBase64Encoding(count: Int = 1000) {
 
     let startTime1: CFTimeInterval = gettime()
     let time1 = dispatch_benchmark(count) {
-        _ = Base64.base64.encode(data: data)
+        _ = Base64.standard.encode(data: data)
     }
     let endTime1: CFTimeInterval = gettime()
 

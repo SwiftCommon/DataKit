@@ -244,14 +244,14 @@ final class Base64Tests: XCTestCase {
         let plain = "abcdefghijklmnopqrstuvwxyz0123456789\n".cStringByteBuffer
         let expected = "YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXowMTIzNDU2Nzg5Cg==".cStringByteBuffer
 
-        let encoded = Base64.base64.encode(data: plain)
+        let encoded = Base64.standard.encode(data: plain)
         expect(encoded) == expected
     }
 
     func testBase64Encoding_LF() {
         let plain = type(of: self).plainLoremIpsum
         let expected = try! Data(contentsOf: resource(file: "PlainLoremIpsum_76.b64"))//swiftlint:disable:this force_try
-        let encoded = Base64.base64.encode(data: plain, with: .padding, lineFeeds: 76)
+        let encoded = Base64.standard.encode(data: plain, with: .padding, lineFeeds: 76)
 
         expect(encoded) == expected
     }
@@ -261,7 +261,7 @@ final class Base64Tests: XCTestCase {
         //swiftlint:disable:next force_try
         let expected = try! Data(contentsOf: resource(file: "PlainLoremIpsum_76_no_padding.b64"))
 
-        expect(Base64.base64.encode(data: plain, with: .none, lineFeeds: 76)) == expected
+        expect(Base64.standard.encode(data: plain, with: .none, lineFeeds: 76)) == expected
     }
 
     /// Mark: padding
