@@ -7,13 +7,13 @@ import Foundation
 /// Base64 encoder/decoder
 public enum Base64 {
     /// Normal Base64 encoding alphabet as per RFC 4648,4
-    case base64
+    case standard
     /// URL and Filename Safe alphabet as per RFC 4648,5
     case urlSafe
 
     var table: String {
         switch self {
-        case .base64:
+        case .standard:
             return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
         case .urlSafe:
             return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_="
