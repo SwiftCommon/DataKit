@@ -291,11 +291,12 @@ public enum Base64 {
         }
 
         return try Base64.asciiTable.withUnsafeBytes { table in
-            // Output buffer pointer
+            // Output buffer needle
             var ptr = 0
-            repeat {
+            while len - needle > 0 {
+                // scan over the input
                 bufferSize = 0
-                repeat {
+                while bufferSize < 4 && len - needle > 0 {
                     // fill the buffer - to skip over characters when necessary
                     let nextByte = bytes[needle]
                     if nextByte != 0x3d {
@@ -311,7 +312,7 @@ public enum Base64 {
                         // padding '=' char encountered (end-of-stream)
                         needle = len
                     }
-                } while bufferSize < 4 && len - needle > 0
+                }
 
                 // Decode the buffer
                 if bufferSize > 1 {
@@ -326,7 +327,7 @@ public enum Base64 {
                     dataPtr[ptr] = table[Int(buffer[2])] << 6 | table[Int(buffer[3])]
                     ptr += 1
                 }
-            } while len - needle > 0
+            }
             return ptr
         }
     }
