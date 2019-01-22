@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# script/update: Update application to run for its current checkout.
+
+set -ev
+
+cd "$(dirname "$0")/.."
+
+script/setup
