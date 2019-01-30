@@ -51,7 +51,7 @@ lane :ci_build do |options|
     skip_gen_xcodeproj = false
   end
 
-  # Let SPM update the xcodeproj
+  # Let SPM create the xcodeproj
   gen_xcodeproj unless skip_gen_xcodeproj
 
   # Run swiftlint

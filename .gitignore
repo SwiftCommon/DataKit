@@ -71,6 +71,10 @@ fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test-output
 
+# Gems and Bundler
+vendor
+**/.bundle
+
 # Mac
 .DS_Store
 
