@@ -36,48 +36,68 @@ extension Data {
      */
     public init(hex: String) throws {
         // Check invalid length
-        guard hex.count % 2 == 0 else {
-            throw HexStringParsingError.invalidLength(hex.count)
+        let length = hex.count
+        guard length % 2 == 0 else {
+            throw HexStringParsingError.invalidLength(length)
         }
 
         // Allocate the byte buffer needed
-        let dataPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: hex.count / 2)
-        let charPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: 2)
+        let bufferSize = length / 2
+        let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: bufferSize)
 
-        defer {
-            // Deallocate the tmp charPtr
-            charPtr.deallocate()
+        var error: Error?
+        guard Data.parse(hex: hex, to: buffer, maxSize: bufferSize, error: &error) else {
+            // Deallocate buffer in case of failure
+            buffer.deallocate()
+            throw error ?? HexStringParsingError.unknownError
         }
 
-        // Loop through the Hex String to fill the dataPtr buffer
-        for (index, character) in hex.utf8.enumerated() {
-            // Even index means we need to 'cache' the first part of the byte literal
-            if index % 2 == 0 {
-                charPtr[0] = character
-            } else {
-                charPtr[1] = character
-                let byteLiteral = String(cString: charPtr)
+        // Manage the unsafe buffer
+        self.init(bytesNoCopy: buffer, count: bufferSize, deallocator: .free)
+    }
+
+    private static func parse(hex: String,
+                              to buffer: UnsafeMutablePointer<UInt8>,
+                              maxSize: Int,
+                              error: inout Error?) -> Bool {
+        return hex.withCString { cString -> Bool in
+            let length = strlen(cString)
+
+            guard length / 2 == maxSize else {
+                error = HexStringParsingError.invalidLength(maxSize)
+                return false
+            }
+
+            // Allocate a buffer for CChars that make up one Byte
+            let charBuffer = UnsafeMutablePointer<CChar>.allocate(capacity: 3)
+            // make sure we're null terminated
+            charBuffer.initialize(repeating: 0, count: 3)
+            defer {
+                charBuffer.deallocate()
+            }
+            // Loop through the Hex String to fill the ptr buffer
+            for idx in stride(from: 0, to: length, by: 2) {
+                // assign the next two characters to the buffer
+                charBuffer.assign(from: cString.advanced(by: idx), count: 2)
+                let byteLiteral = String(cString: charBuffer)
                 // Parse the String to UInt8
                 guard let byte = UInt8(byteLiteral, radix: 16) else {
-                    defer {
-                        // Deallocate dataPtr in case of illegal character - since the dataPtr is unmanaged
-                        dataPtr.deallocate()
-                    }
-                    throw HexStringParsingError.illegalCharacters(pattern: hex)
+                    error = HexStringParsingError.illegalCharacters(pattern: hex, index: idx, literal: byteLiteral)
+                    return false
                 }
-                dataPtr[index / 2] = byte
+                buffer[idx / 2] = byte
             }
+            return true
         }
-
-        // Manage the unsafe dataPtr
-        self.init(bytesNoCopy: dataPtr, count: hex.count / 2, deallocator: .free)
     }
 }
 
 /// HexString parsing error cases
 public enum HexStringParsingError: Error, Equatable {
     /// characters do not conform to regex pattern: `[a-z][A-Z][0-9]`.
-    case illegalCharacters(pattern: String)
+    case illegalCharacters(pattern: String, index: Int, literal: String)
     /// When the String length is *odd*
     case invalidLength(_: Int)
+    /// Unknown error
+    case unknownError
 }

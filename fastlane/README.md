@@ -21,31 +21,31 @@ fastlane ci_build
 ```
 Runs tests and builds example for the given environment
 
-The lane to run by ci on every commit and PR. This lanes calls the lanes `static_code_analysis`, `gen_xcodeproj`, `test_framework` and `generate_docs`.
+The lane to run by ci on every commit and PR. This lanes calls the lanes `static_code_analysis`, `generate_xcodeproj`, `test_framework` and `generate_docs`.
 
 ####Example:
 
 ```
-fastlane ci_build configuration:Debug skip_gen_xcodeproj:true --env osx
+fastlane ci_build configuration:Debug skip_generate_xcodeproj:true --env osx
 ```
 
 ####Options
 
  * **`configuration`**: The build configuration to use [default: Release]. (`SC_CONFIGURATION`)
 
- * **`skip_gen_xcodeproj`**: Whether to slip the gen_xcodeproj lane [default: false]. (`SC_SKIP_GEN_XCODEPROJ`)
+ * **`skip_generate_xcodeproj`**: Whether to slip the generate_xcodeproj lane [default: false]. (`SC_SKIP_generate_xcodeproj`)
 
 
-### gen_xcodeproj
+### generate_xcodeproj
 ```
-fastlane gen_xcodeproj
+fastlane generate_xcodeproj
 ```
 Update the xcodeproj to fix the Swift Package manager dependency path(s)
 
 ####Example:
 
 ```
-fastlane gen_xcodeproj
+fastlane generate_xcodeproj
 ```
 
 
@@ -79,14 +79,14 @@ Set `scan` action environment variables to control test configuration
 ####Example:
 
 ```
-fastlane code_coverage configuration:Debug skip_gen_xcodeproj:false
+fastlane code_coverage configuration:Debug skip_generate_xcodeproj:false
 ```
 
 ####Options
 
  * **`configuration`**: The build configuration to use. The only supported configuration is the `Debug` configuration.
 
- * **`skip_gen_xcodeproj`**: Whether to slip the gen_xcodeproj lane [default: false]. (`SC_SKIP_GEN_XCODEPROJ`)
+ * **`skip_generate_xcodeproj`**: Whether to slip the generate_xcodeproj lane [default: false]. (`SC_SKIP_generate_xcodeproj`)
 
 
 ### static_code_analysis
