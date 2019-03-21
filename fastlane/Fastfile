@@ -27,12 +27,12 @@ end
 
 #Test Lanes
 desc "Runs tests and builds example for the given environment"
-desc "The lane to run by ci on every commit and PR. This lanes calls the lanes `static_code_analysis`, `gen_xcodeproj`, `test_framework` and `generate_docs`."
+desc "The lane to run by ci on every commit and PR. This lanes calls the lanes `static_code_analysis`, `generate_xcodeproj`, `test_framework` and `generate_docs`."
 desc "####Example:"
-desc "```\nfastlane ci_build configuration:Debug skip_gen_xcodeproj:true --env osx\n```"
+desc "```\nfastlane ci_build configuration:Debug skip_generate_xcodeproj:true --env osx\n```"
 desc "####Options"
 desc " * **`configuration`**: The build configuration to use [default: Release]. (`SC_CONFIGURATION`)"
-desc " * **`skip_gen_xcodeproj`**: Whether to slip the gen_xcodeproj lane [default: false]. (`SC_SKIP_GEN_XCODEPROJ`)"
+desc " * **`skip_generate_xcodeproj`**: Whether to slip the generate_xcodeproj lane [default: false]. (`SC_SKIP_generate_xcodeproj`)"
 desc ""
 lane :ci_build do |options|
   if options[:configuration]
@@ -43,16 +43,16 @@ lane :ci_build do |options|
     configuration = "Release"
   end
 
-  if !options[:skip_gen_xcodeproj].nil?
-    skip_gen_xcodeproj = options[:skip_gen_xcodeproj]
-  elsif !ENV["SC_SKIP_GEN_XCODEPROJ"].nil?
-    skip_gen_xcodeproj = true?(ENV["SC_SKIP_GEN_XCODEPROJ"])
+  if !options[:skip_generate_xcodeproj].nil?
+    skip_generate_xcodeproj = options[:skip_generate_xcodeproj]
+  elsif !ENV["SC_SKIP_generate_xcodeproj"].nil?
+    skip_generate_xcodeproj = true?(ENV["SC_SKIP_generate_xcodeproj"])
   else
-    skip_gen_xcodeproj = false
+    skip_generate_xcodeproj = false
   end
 
   # Let SPM create the xcodeproj
-  gen_xcodeproj unless skip_gen_xcodeproj
+  generate_xcodeproj unless skip_generate_xcodeproj
 
   # Run swiftlint
   static_code_analysis options
@@ -71,9 +71,9 @@ end
 
 desc "Update the xcodeproj to fix the Swift Package manager dependency path(s)"
 desc "####Example:"
-desc "```\nfastlane gen_xcodeproj\n```"
+desc "```\nfastlane generate_xcodeproj\n```"
 desc ""
-lane :gen_xcodeproj do |options|
+lane :generate_xcodeproj do |options|
   spm(
     command: "generate-xcodeproj",
     xcconfig: "Package.xcconfig"
@@ -97,24 +97,24 @@ end
 desc "Produces code coverage information"
 desc "Set `scan` action environment variables to control test configuration"
 desc "####Example:"
-desc "```\nfastlane code_coverage configuration:Debug skip_gen_xcodeproj:false\n```"
+desc "```\nfastlane code_coverage configuration:Debug skip_generate_xcodeproj:false\n```"
 desc "####Options"
 desc " * **`configuration`**: The build configuration to use. The only supported configuration is the `Debug` configuration."
-desc " * **`skip_gen_xcodeproj`**: Whether to slip the gen_xcodeproj lane [default: false]. (`SC_SKIP_GEN_XCODEPROJ`)"
+desc " * **`skip_generate_xcodeproj`**: Whether to slip the generate_xcodeproj lane [default: false]. (`SC_SKIP_generate_xcodeproj`)"
 desc ""
 lane :code_coverage do |options|
   if options[:configuration] != "Debug"
     UI.important("Not running code coverage lane for #{options[:configuration]} configuration")
   else
-    if !options[:skip_gen_xcodeproj].nil?
-      skip_gen_xcodeproj = options[:skip_gen_xcodeproj]
-    elsif !ENV["SC_SKIP_GEN_XCODEPROJ"].nil?
-      skip_gen_xcodeproj = true?(ENV["SC_SKIP_GEN_XCODEPROJ"])
+    if !options[:skip_generate_xcodeproj].nil?
+      skip_generate_xcodeproj = options[:skip_generate_xcodeproj]
+    elsif !ENV["SC_SKIP_generate_xcodeproj"].nil?
+      skip_generate_xcodeproj = true?(ENV["SC_SKIP_generate_xcodeproj"])
     else
-      skip_gen_xcodeproj = false
+      skip_generate_xcodeproj = false
     end
 
-    gen_xcodeproj options unless skip_gen_xcodeproj
+    generate_xcodeproj options unless skip_generate_xcodeproj
     scan(
       configuration: options[:configuration],
       xcargs: "-enableCodeCoverage YES -skipUnavailableActions"

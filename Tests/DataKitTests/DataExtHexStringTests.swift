@@ -39,7 +39,7 @@ final class DataExtHexStringTests: XCTestCase {
         let hexString = "nothex"
         expect {
             try Data(hex: hexString)
-        }.to(throwError(HexStringParsingError.illegalCharacters(pattern: hexString)))
+        }.to(throwError(HexStringParsingError.illegalCharacters(pattern: hexString, index: 0, literal: "no")))
     }
 
     static let allTests = [

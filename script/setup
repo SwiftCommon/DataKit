@@ -10,6 +10,6 @@ cd "$(dirname "$0")/.."
 script/bootstrap
 
 echo "==> Setting up xcodeproj…"
-bundle exec fastlane gen_xcodeproj
+bundle exec fastlane generate_xcodeproj
 
 echo "==> Project is now ready to go!"
