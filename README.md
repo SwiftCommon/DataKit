@@ -10,7 +10,7 @@ Swift µframework for Data operations.
 Getting started
 ---------------
 
-On first checkout you best run: `$ script/setup` and when you're a regular user just: `$ script/update`.
+On first checkout you best run: `$ script/setup` and when you're a regular user just: `$ script/update`. These scripts are also available through GNUMake: `$ make setup` & `$ make update`.
 For more info on the scripts checkout [script/README.md]()
 
 ** Note: these scripts may update the Xcode project file and resolve the `Package.resolved` dependencies. You can also do this by running:  
