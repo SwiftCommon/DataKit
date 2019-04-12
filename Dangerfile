@@ -9,13 +9,19 @@ end
 declared_dev_known = (github.pr_body).include?("#known")
 warn "Developer overridden Danger assertions. Shown as warnings still. 🤷‍♂️" if declared_dev_known
 
+# Log an error or warning when developer declared #known in pr body
+def failOrWarn(text, pass_build)
+  fail text unless pass_build
+  warn "[KNOWN 🤫] #{text}" if pass_build
+end
+
 # Check for protected files updated
-files.protect_files(path: "Dangerfile", message: "📛 Dangerfile modified", fail_build: false)
-files.protect_files(path: ".swiftlint.yml", message: "💄 .swiftlint modified", fail_build: false)
-files.protect_files(path: ".jazzy.yml", message: "🎵 .jazzy modified", fail_build: false)
-files.protect_files(path: ".gitignore", message: "🙈 .gitignore modified", fail_build: false)
-files.protect_files(path: "LICENSE", message: "📃 LICENSE modified", fail_build: !declared_dev_known)
-files.protect_files(path: ".travis.yml", message: "👷‍♀️ Travis-CI configuration modified", fail_build: !declared_dev_known)
+files.protect_files(path: "Dangerfile", message: "📛 Dangerfile modified", fail_build: false, callback: method(:failOrWarn))
+files.protect_files(path: ".swiftlint.yml", message: "💄 .swiftlint modified", fail_build: false, callback: method(:failOrWarn))
+files.protect_files(path: ".jazzy.yml", message: "🎵 .jazzy modified", fail_build: false, callback: method(:failOrWarn))
+files.protect_files(path: ".gitignore", message: "🙈 .gitignore modified", fail_build: false, callback: method(:failOrWarn))
+files.protect_files(path: "LICENSE", message: "📃 LICENSE modified", fail_build: !declared_dev_known, callback: method(:failOrWarn))
+files.protect_files(path: ".travis.yml", message: "👷‍♀️ Travis-CI configuration modified", fail_build: !declared_dev_known, callback: method(:failOrWarn))
 
 # Protect fastlane .env files
 files.protect_files(path: "fastlane/.env", message: "🏎  Fastlane file modified (.env)", fail_build: !declared_dev_known)
@@ -23,12 +29,6 @@ files.protect_files(path: "fastlane/.env.default", message: "🏎  Fastlane file
 files.protect_files(path: "fastlane/.env.ios12_xcode10", message: "🏎  Fastlane file modified (.env.ios12_xcode10)", fail_build: !declared_dev_known)
 files.protect_files(path: "fastlane/.env.osx", message: "🏎  Fastlane file modified (.env.osx)", fail_build: !declared_dev_known)
 files.protect_files(path: "fastlane/Fastfile", message: "🏎  Fastlane file modified (Fastfile)", fail_build: !declared_dev_known)
-
-# Log an error or warning when developer declared #known in pr body
-def failOrWarn(text, declared_dev_known)
-  fail text unless declared_dev_known
-  warn "[KNOWN 🤫] #{text}" if declared_dev_known
-end
 
 # Ensure a clean commits history
 if git.commits.any? { |c| c.message =~ /^Merge branch '#{github.branch_for_base}'/ }
