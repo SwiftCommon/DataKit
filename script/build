@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# script/build: Build the application.s
+
+set -ev
+
+cd "$(dirname "$0")/.."
+
+[ -z "$DEBUG" ] || set -x
+
+script/update
+
+echo "==> Building…"
+
+bundle exec fastlane build_example

@@ -15,13 +15,13 @@ matrix:
     - env: FASTLANE_LANE=code_coverage FASTLANE_ENV=default
     - env: FASTLANE_ENV=ios12_xcode10
     - env: FASTLANE_ENV=osx
-install: ./script/setup
+install: make setup
 before_script:
   - set -o pipefail
   - if [ "$TRAVIS_PULL_REQUEST" != "false" -a "$FASTLANE_LANE" == "code_coverage" ]; then
       bundle exec danger;
     fi
-script: ./script/cibuild $FASTLANE_LANE $FASTLANE_ENV
+script: make cibuild FL_LANE=$FASTLANE_LANE FL_ENV=$FASTLANE_ENV
 after_success:
   # Run codecov
   - if [ "$FASTLANE_LANE" == "code_coverage" ]; then
