@@ -24,11 +24,11 @@ files.protect_files(path: "LICENSE", message: "📃 LICENSE modified", fail_buil
 files.protect_files(path: ".travis.yml", message: "👷‍♀️ Travis-CI configuration modified", fail_build: !declared_dev_known, callback: method(:failOrWarn))
 
 # Protect fastlane .env files
-files.protect_files(path: "fastlane/.env", message: "🏎  Fastlane file modified (.env)", fail_build: !declared_dev_known)
-files.protect_files(path: "fastlane/.env.default", message: "🏎  Fastlane file modified (.env.default)", fail_build: !declared_dev_known)
-files.protect_files(path: "fastlane/.env.ios12_xcode10", message: "🏎  Fastlane file modified (.env.ios12_xcode10)", fail_build: !declared_dev_known)
-files.protect_files(path: "fastlane/.env.osx", message: "🏎  Fastlane file modified (.env.osx)", fail_build: !declared_dev_known)
-files.protect_files(path: "fastlane/Fastfile", message: "🏎  Fastlane file modified (Fastfile)", fail_build: !declared_dev_known)
+files.protect_files(path: "fastlane/.env", message: "🏎  Fastlane file modified (.env)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
+files.protect_files(path: "fastlane/.env.default", message: "🏎  Fastlane file modified (.env.default)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
+files.protect_files(path: "fastlane/.env.ios12_xcode10", message: "🏎  Fastlane file modified (.env.ios12_xcode10)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
+files.protect_files(path: "fastlane/.env.osx", message: "🏎  Fastlane file modified (.env.osx)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
+files.protect_files(path: "fastlane/Fastfile", message: "🏎  Fastlane file modified (Fastfile)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
 
 # Ensure a clean commits history
 if git.commits.any? { |c| c.message =~ /^Merge branch '#{github.branch_for_base}'/ }

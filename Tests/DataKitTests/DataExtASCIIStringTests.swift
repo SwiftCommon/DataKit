@@ -15,7 +15,7 @@ final class DataExtASCIIStringTests: XCTestCase {
     }
 
     func testASCIIData() {
-        let data = Data(bytes: [97, 98, 99, 100])
+        let data = Data([97, 98, 99, 100])
         expect(data.asciiString).to(equal("abcd"))
     }
 

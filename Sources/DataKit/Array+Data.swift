@@ -7,6 +7,6 @@ import Foundation
 extension Array where Element == UInt8 {
     /// Returns: `[UInt8]` as `Data`
     public var data: Data {
-        return Data(bytes: self)
+        return Data(self)
     }
 }

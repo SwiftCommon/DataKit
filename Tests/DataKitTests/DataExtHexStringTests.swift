@@ -9,13 +9,13 @@ import XCTest
 final class DataExtHexStringTests: XCTestCase {
 
     func testHexString_no_separator() {
-        let data = Data(bytes: [0, 1, 80, 127, 255])
+        let data = Data([0, 1, 80, 127, 255])
         let expectedHexString = "0001507FFF"
         expect(data.hexString()).to(equal(expectedHexString))
     }
 
     func testHexString_with_separator() {
-        let data = Data(bytes: [0, 1, 80, 127, 255])
+        let data = Data([0, 1, 80, 127, 255])
         let expectedHexString = "00 01 50 7F FF"
         expect(data.hexString(separator: " ")).to(equal(expectedHexString))
     }
