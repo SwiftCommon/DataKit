@@ -1,11 +1,10 @@
-// swift-tools-version:5.0
+// swift-tools-version:4.2
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+
 import PackageDescription
 
 let package = Package(
     name: "DataKit",
-    platforms: [
-      .macOS(.v10_12), .iOS(.v8), .tvOS(.v9), .watchOS(.v3)
-    ],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
@@ -19,7 +18,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/Quick/Nimble", "8.0.0" ..< "9.0.0")
+        .package(url: "https://github.com/Quick/Nimble", .branch("master"))
     ],
     targets: [
         .target(
@@ -35,5 +34,5 @@ let package = Package(
             dependencies: ["DataKit"]
         )
     ],
-    swiftLanguageVersions: [.v5]
+    swiftLanguageVersions: [.v4, .v4_2]
 )

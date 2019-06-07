@@ -1,6 +1,6 @@
 # DataKit
 
-![Swift 4.0+](https://img.shields.io/badge/Swift-4.0+-orange.svg)
+![Swift 5.0+](https://img.shields.io/badge/Swift-5.0+-orange.svg)
 [![license](https://img.shields.io/github/license/SwiftCommon/DataKit.svg)](https://github.com/SwiftCommon/DataKit/LICENSE)
 [![Build Status](https://travis-ci.org/SwiftCommon/DataKit.svg?branch=master)](https://travis-ci.org/SwiftCommon/DataKit)
 [![codecov](https://codecov.io/gh/SwiftCommon/DataKit/branch/master/graph/badge.svg)](https://codecov.io/gh/SwiftCommon/DataKit)

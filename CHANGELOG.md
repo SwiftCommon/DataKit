@@ -15,3 +15,4 @@
 * [Added] Base64.decode(string: String) -> Data
 * [Added] Base64.standard.encode(data: Data) -> Data
 * [Added] Base64.urlSafe.encode(data: Data) -> Data
+* [Migration] Swift 5.0

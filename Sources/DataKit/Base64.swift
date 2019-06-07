@@ -60,7 +60,7 @@ public enum Base64 {
 
             let table = Base64.asciiTable
             // Loop through the data set and scan the chars for validity based on the current [decoding] mode
-            return data.withUnsafeBytes { (bytes: UnsafePointer<UInt8>) -> Int in
+            return data.withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> Int in
                 for idx in 0..<data.count {
                     let byte = bytes[idx]
                     let idxByte = Int(byte)
@@ -161,7 +161,7 @@ public enum Base64 {
         dataPtr[outlen - 1] = characterTable[0x40]
 
         // pointer to the input data backing buffer
-        _ = data.withUnsafeBytes { (bytes: UnsafePointer<UInt8>) -> Int in
+        _ = data.withUnsafeBytes { (bytesPtr: UnsafeRawBufferPointer) -> Int in
             // Space needed per encoding block
             var bufferSize: Int
             let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: 3)
@@ -181,7 +181,9 @@ public enum Base64 {
                 bufferSize = min(stepSize, bytesRemaining)
                 // Fill the buffer with the input bytes
                 buffer.initialize(repeating: 0, count: 3)
-                buffer.assign(from: bytes.advanced(by: idx), count: bufferSize)
+                //swiftlint:disable:next force_unwrapping
+                let ptr = bytesPtr.baseAddress!.advanced(by: idx).assumingMemoryBound(to: UInt8.self)
+                buffer.assign(from: ptr, count: bufferSize)
                 // Tell the compiler the current buffer is to treated as an UInt32
                 buffer.withMemoryRebound(to: UInt32.self, capacity: bufferSize) { bufferBytes in
                     // buffer is little-endian so the first byte is the least significant part of the UInt32.
@@ -264,9 +266,11 @@ public enum Base64 {
         let decodedLength = ((inlen + 3) / 4) * 3
         let dataPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: decodedLength)
         // Get the byte buffer to the encoded data
-        let outlen = try data.withUnsafeBytes { (bytes: UnsafePointer<UInt8>) -> Int in
+        let outlen = try data.withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> Int in
             do {
-                return try decode(buffer: bytes, output: dataPtr, len: data.count, mode: mode)
+                //swiftlint:disable:next force_unwrapping
+                let ptr = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                return try decode(buffer: ptr, output: dataPtr, len: data.count, mode: mode)
             } catch let error {
                 dataPtr.deallocate()
                 throw error
@@ -290,7 +294,7 @@ public enum Base64 {
             buffer.deallocate()
         }
 
-        return try Base64.asciiTable.withUnsafeBytes { table in
+        return try Base64.asciiTable.withUnsafeBytes { (table: UnsafeRawBufferPointer) in
             // Output buffer needle
             var ptr = 0
             while len - needle > 0 {

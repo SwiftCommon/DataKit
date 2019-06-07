@@ -87,6 +87,14 @@ final class Base64Tests: XCTestCase {
         } == plain
     }
 
+    func testBase64DecodingEmpty() {
+        let base64 = Data()
+
+        expect {
+            try Base64.decode(data: base64)
+        } == Data()
+    }
+
     func testBase64Decoding_image() {
         let base64data = try! Data(contentsOf: resource(file: "asciifull.b64")) //swiftlint:disable:this force_try
         let expected = try! Data(contentsOf: resource(file: "asciifull.gif")) //swiftlint:disable:this force_try
@@ -357,6 +365,7 @@ final class Base64Tests: XCTestCase {
         ("testURLSafeEncoding", testURLSafeEncoding),
         ("testURLSafeEncoding_padding", testURLSafeEncoding_padding),
         ("testBase64Decoding", testBase64Decoding),
+        ("testBase64DecodingEmpty", testBase64DecodingEmpty),
         ("testBase64Decoding_image", testBase64Decoding_image),
         ("testBase64Decoding_CR_LF", testBase64Decoding_CR_LF),
         ("testBase64Decoding_LF", testBase64Decoding_LF),

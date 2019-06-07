@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # script/lint: Run lint for application.
 
@@ -7,8 +7,6 @@ set -ev
 cd "$(dirname "$0")/.."
 
 [ -z "$DEBUG" ] || set -x
-
-script/update
 
 echo "==> Running static analysis…"
 

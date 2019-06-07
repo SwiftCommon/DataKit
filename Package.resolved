@@ -5,9 +5,9 @@
         "package": "Nimble",
         "repositoryURL": "https://github.com/Quick/Nimble",
         "state": {
-          "branch": "master",
-          "revision": "c68f5fd88997ab93a53cab07434349621882c817",
-          "version": null
+          "branch": null,
+          "revision": "43304bf2b1579fd555f2fdd51742771c1e4f2b98",
+          "version": "8.0.1"
         }
       }
     ]
