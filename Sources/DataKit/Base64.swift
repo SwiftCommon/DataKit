@@ -112,7 +112,7 @@ public enum Base64 {
         /// Calculate the bytes needed to encode a given Data blob
         ///
         /// - Parameters:
-        ///     - data: the data to calculate the necessary encoding length needed for
+        ///     - data: the data to calculate the necessary encoding length for
         ///     - lineFeeds: number of base64 characters per line, e.g. newline breakpoint. 0 = default - no breaking
         /// - Returns: the encoded byte length needed for Base64 encoding
         public func encodedLength(_ data: Data, lineFeeds: Int = 0) -> Int {
@@ -177,14 +177,14 @@ public enum Base64 {
             // Encode the input byte buffer step-by-step with steps of 3 bytes at a time
             let stepSize = 3
             for idx in stride(from: 0, to: inlen, by: stepSize) {
-                // Space to fill for this pass is stepSize or bytesRemaining when latter is lesser.
+                // Space to fill for this pass is stepSize or bytesRemaining when the latter is smaller.
                 bufferSize = min(stepSize, bytesRemaining)
                 // Fill the buffer with the input bytes
                 buffer.initialize(repeating: 0, count: 3)
                 //swiftlint:disable:next force_unwrapping
                 let ptr = bytesPtr.baseAddress!.advanced(by: idx).assumingMemoryBound(to: UInt8.self)
                 buffer.assign(from: ptr, count: bufferSize)
-                // Tell the compiler the current buffer is to treated as an UInt32
+                // Tell the compiler the current buffer is to be treated as an UInt32
                 buffer.withMemoryRebound(to: UInt32.self, capacity: bufferSize) { bufferBytes in
                     // buffer is little-endian so the first byte is the least significant part of the UInt32.
                     let intValue = bufferBytes.pointee.bigEndian
