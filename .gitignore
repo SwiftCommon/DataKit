@@ -77,7 +77,3 @@ vendor
 
 # Mac
 .DS_Store
-
-# Jazzy
-undocumented.json
-docs/
