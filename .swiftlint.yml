@@ -35,4 +35,5 @@ excluded:
   - Package.swift
   - .build/
   - vendor/
+  - Carthage/
 line_length: 120
