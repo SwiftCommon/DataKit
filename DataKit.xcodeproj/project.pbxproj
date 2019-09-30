@@ -117,6 +117,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		00AFB980328AD5B4B598A5DD35900D98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D4EFEC8EF1DA69838E81286D005D7BF /* Data+HexString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+HexString.swift"; sourceTree = "<group>"; };
 		23001D7F47F36F29CF0DF5B4A3F7BED6 /* asciifull.b64 */ = {isa = PBXFileReference; path = asciifull.b64; sourceTree = "<group>"; };
 		2AB22E5D1B72B6F9FA96B80F3F3D9BA7 /* DataKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DataKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +133,7 @@
 		726A78A750A2E2ED49A018E479F5CDB0 /* PlainLoremIpsum_60.b64 */ = {isa = PBXFileReference; path = PlainLoremIpsum_60.b64; sourceTree = "<group>"; };
 		737BE200484BAC8324E945101CAAD500 /* Array+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Data.swift"; sourceTree = "<group>"; };
 		7CA6D6FF58F94FC4D9A6409CB3EFCE06 /* XCTestManifests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
+		8C8D3DA953D68CF847F8CB1C4D0AAACE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		970F1BD81181CEEC4C81FAB11A496544 /* PlainLoremIpsum.b64 */ = {isa = PBXFileReference; path = PlainLoremIpsum.b64; sourceTree = "<group>"; };
 		97BAB890F1522588A59136498F0DAE0F /* PlainLoremIpsum_76.b64 */ = {isa = PBXFileReference; path = PlainLoremIpsum_76.b64; sourceTree = "<group>"; };
 		9901D0D7AD0008FFF750E16BA6431677 /* PlainLoremIpsum_no_padding.b64 */ = {isa = PBXFileReference; path = PlainLoremIpsum_no_padding.b64; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				339E47E20D6F9E06F3E38ABC83BF2F2E /* Data+ASCIIString.swift */,
 				0D4EFEC8EF1DA69838E81286D005D7BF /* Data+HexString.swift */,
 				B7B93A19483AEF755BC3A7AC336B4A0F /* Data+UTF8String.swift */,
+				8C8D3DA953D68CF847F8CB1C4D0AAACE /* Info.plist */,
 			);
 			name = DataKit;
 			path = Sources/DataKit;
@@ -285,6 +288,7 @@
 				328D269E6C290DE6CD37C9E2551D9988 /* DataExtASCIIStringTests.swift */,
 				FC64FC3CE38FB11C603311518F0FA673 /* DataExtHexStringTests.swift */,
 				554E8ABA56358904931C77E625F35C8A /* DataExtUTF8StringTests.swift */,
+				00AFB980328AD5B4B598A5DD35900D98 /* Info.plist */,
 				7CA6D6FF58F94FC4D9A6409CB3EFCE06 /* XCTestManifests.swift */,
 				758F2B2B3EA3DBD123631113A7D86734 /* Resources */,
 				503BB048846DE90FA3392501C12A686E /* Util */,
@@ -601,6 +605,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
+				INFOPLIST_FILE = Tests/DataKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = DataKitTests;
 				SDKROOT = macosx;
@@ -629,6 +634,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Sources/DataKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = DataKit;
@@ -708,6 +714,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
+				INFOPLIST_FILE = Tests/DataKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = DataKitTests;
 				SDKROOT = macosx;
@@ -724,6 +731,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Sources/DataKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = DataKit;
@@ -742,6 +750,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Sources/DataKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = DataKit;
@@ -772,6 +781,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				INFOPLIST_FILE = Tests/DataKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = DataKitTests;
 				SDKROOT = iphoneos;
@@ -788,6 +798,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Sources/DataKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = DataKit;
@@ -806,6 +817,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				INFOPLIST_FILE = Tests/DataKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = DataKitTests;
 				SDKROOT = iphoneos;
