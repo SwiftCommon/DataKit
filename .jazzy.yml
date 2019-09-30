@@ -8,5 +8,3 @@ theme: jony
 xcodebuild_arguments:
   - "-project"
   - 'DataKit.xcodeproj'
-  - "-scheme"
-  - 'DataKit-Package'
