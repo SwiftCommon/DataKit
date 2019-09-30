@@ -17,6 +17,10 @@ else
     echo "==> Installing swiftlint…"
     brew install swiftlint
   }
+  hash xcodegen 2>/dev/null  || {
+    echo "==> Installing xcodegen…"
+    brew install xcodegen
+  }
 fi
 
 # if [ -f ".ruby-version" ] && [ -z "$(rbenv version-name 2>/dev/null)" ]; then
