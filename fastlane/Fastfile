@@ -76,9 +76,11 @@ desc ""
 lane :generate_xcodeproj do |options|
   if File.exist? "../project.yml"
     # Let Xcodegen generate the Project
+    carthage(command: "bootstrap", no_build: false, use_binaries: false, cache_builds: true)
     sh("xcodegen", "generate", "--spec", "../project.yml")
   else
     # Let SPM create the xcodeproj
+    spm(command: "resolve")
     spm_generate_xcodeproj options
   end
 end
