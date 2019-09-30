@@ -51,8 +51,8 @@ lane :ci_build do |options|
     skip_generate_xcodeproj = false
   end
 
-  # Let SPM create the xcodeproj
-  generate_xcodeproj unless skip_generate_xcodeproj
+  # Generate the xcodeproj
+  generate_xcodeproj options unless skip_generate_xcodeproj
 
   # Run swiftlint
   static_code_analysis options
@@ -69,11 +69,25 @@ lane :ci_build do |options|
   gen_docs
 end
 
-desc "Update the xcodeproj to fix the Swift Package manager dependency path(s)"
+desc "Generate the Xcodeproj based on Xcodegen or SPM"
 desc "####Example:"
 desc "```\nfastlane generate_xcodeproj\n```"
 desc ""
 lane :generate_xcodeproj do |options|
+  if File.exist? "../project.yml"
+    # Let Xcodegen generate the Project
+    sh("xcodegen", "generate", "--spec", "../project.yml")
+  else
+    # Let SPM create the xcodeproj
+    spm_generate_xcodeproj options
+  end
+end
+
+desc "Update the xcodeproj to fix the Swift Package manager dependency path(s)"
+desc "####Example:"
+desc "```\nfastlane spm_generate_xcodeproj\n```"
+desc ""
+lane :spm_generate_xcodeproj do |options|
   spm(
     command: "generate-xcodeproj",
     xcconfig: "Package.xcconfig"

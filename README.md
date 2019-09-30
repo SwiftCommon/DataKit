@@ -4,6 +4,7 @@
 [![license](https://img.shields.io/github/license/SwiftCommon/DataKit.svg)](https://github.com/SwiftCommon/DataKit/LICENSE)
 [![Build Status](https://travis-ci.org/SwiftCommon/DataKit.svg?branch=master)](https://travis-ci.org/SwiftCommon/DataKit)
 [![codecov](https://codecov.io/gh/SwiftCommon/DataKit/branch/master/graph/badge.svg)](https://codecov.io/gh/SwiftCommon/DataKit)
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 Swift µframework for Data operations.
 
@@ -76,7 +77,17 @@ Data(hex: hexString) // -> [0xc3, 0x98, 0x61, 0x62, 0x63, 0x64]
 Installation
 ------------
 
+### Carthage
+
+Put this in your `Cartfile`:
+
+```code
+  github "SwiftCommon/DataKit" ~> 1.0
+```
+
 ### SwiftPM
+
+Put this in your `Package.swift`:
 
 ```swift
    ...
