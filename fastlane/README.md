@@ -40,12 +40,25 @@ fastlane ci_build configuration:Debug skip_generate_xcodeproj:true --env osx
 ```
 fastlane generate_xcodeproj
 ```
-Update the xcodeproj to fix the Swift Package manager dependency path(s)
+Generate the Xcodeproj based on Xcodegen or SPM
 
 ####Example:
 
 ```
 fastlane generate_xcodeproj
+```
+
+
+### spm_generate_xcodeproj
+```
+fastlane spm_generate_xcodeproj
+```
+Update the xcodeproj to fix the Swift Package manager dependency path(s)
+
+####Example:
+
+```
+fastlane spm_generate_xcodeproj
 ```
 
 

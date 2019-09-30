@@ -27,7 +27,9 @@ files.protect_files(path: ".travis.yml", message: "👷‍♀️ Travis-CI confi
 files.protect_files(path: "fastlane/.env", message: "🏎  Fastlane file modified (.env)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
 files.protect_files(path: "fastlane/.env.default", message: "🏎  Fastlane file modified (.env.default)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
 files.protect_files(path: "fastlane/.env.ios12_xcode10", message: "🏎  Fastlane file modified (.env.ios12_xcode10)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
-files.protect_files(path: "fastlane/.env.osx", message: "🏎  Fastlane file modified (.env.osx)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
+files.protect_files(path: "fastlane/.env.ios13_xcode11", message: "🏎  Fastlane file modified (.env.ios13_xcode11)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
+files.protect_files(path: "fastlane/.env.osx14", message: "🏎  Fastlane file modified (.env.osx14)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
+files.protect_files(path: "fastlane/.env.osx15", message: "🏎  Fastlane file modified (.env.osx14)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
 files.protect_files(path: "fastlane/Fastfile", message: "🏎  Fastlane file modified (Fastfile)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
 
 # Ensure a clean commits history
@@ -95,15 +97,15 @@ end
 
 # Warn when any of the package manifest(s) updated but not others
 # podspec_updated = manifest.manifest_file(name: "DataKit.podspec", path: /DataKit.podspec/, modified_file_list: modified_files) TODO
-# cartfile_updated = manifest.manifest_file(name: "Cartfile", path: /Cartfile$/, modified_file_list: modified_files) TODO
-# cartfile_resolved_updated = manifest.manifest_file(name: "Cartfile.resolved", path: /Cartfile.resolved/, modified_file_list: modified_files) TODO
+cartfile_updated = manifest.manifest_file(name: "Cartfile", path: /Cartfile$/, modified_file_list: modified_files)
+cartfile_resolved_updated = manifest.manifest_file(name: "Cartfile.resolved", path: /Cartfile.resolved/, modified_file_list: modified_files)
 package_updated = manifest.manifest_file(name: "Package.swift", path: /Package.swift/, modified_file_list: modified_files)
 package_resolved_updated = manifest.manifest_file(name: "Package.resolved", path: /Package.resolved/, modified_file_list: modified_files)
 
 manifests = [
-    # podspec_updated,
-    # cartfile_updated,
-    # cartfile_resolved_updated,
+   # podspec_updated,
+   cartfile_updated,
+   cartfile_resolved_updated,
    package_updated,
    package_resolved_updated
 ]

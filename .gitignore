@@ -5,7 +5,6 @@
 ## Build generated
 build/
 DerivedData/
-/*.xcodeproj
 
 ## Various settings
 *.pbxuser
@@ -16,6 +15,7 @@ DerivedData/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
+## User settings
 xcuserdata/
 
 ## Other
@@ -55,8 +55,7 @@ playground.xcworkspace
 # Carthage
 #
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
-# Carthage/Checkouts
-
+Carthage/Checkouts
 Carthage/Build
 
 # fastlane

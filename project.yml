@@ -1,0 +1,47 @@
+name: DataKit
+options:
+  deploymentTarget:
+    macOS: 10.12
+    iOS: 13.0
+settings:
+  base:
+    SWIFT_VERSION: 5.0
+  configs:
+    Release:
+      SWIFT_COMPILATION_MODE: wholemodule
+    Debug:
+      SWIFT_COMPILATION_MODE: incremental
+targets:
+  DataKit:
+    type: framework
+    platform: [macOS, iOS]
+    sources:
+      - Sources/DataKit
+    scheme:
+      testTargets:
+        - DataKitTests_${platform}
+      gatherCoverageData: true
+  DataKitBenchmark:
+    type: tool
+    platform: macOS
+    settings:
+      base:
+        SWIFT_FORCE_DYNAMIC_LINK_STDLIB: YES
+        SWIFT_FORCE_STATIC_LINK_STDLIB: NO
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited)"
+        SWIFT_OBJC_BRIDGING_HEADER: Sources/DataKitBenchmark/BenchmarkBridgingHeader.h
+    sources:
+      - Sources/DataKitBenchmark
+    dependencies:
+      - target: DataKit_macOS
+  DataKitTests:
+    type: bundle.unit-test
+    platform: [macOS, iOS]
+    sources:
+      - Tests/DataKitTests
+    resources:
+      - Tests/DataKitTests/Resources
+    dependencies:
+      - target: DataKit_${platform}
+      - carthage: Nimble
+buildImplicitDependencies: true
