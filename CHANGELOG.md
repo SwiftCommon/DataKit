@@ -1,6 +1,14 @@
 # Changelog
 
-0.0.1
+Pre-release
+-----------
+
+1.0.1
+-----
+
+* [Change] iOS deployment target (12.0)
+
+1.0.0
 -----
 
 * [Tools] Nimble

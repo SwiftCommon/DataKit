@@ -2,7 +2,7 @@ name: DataKit
 options:
   deploymentTarget:
     macOS: 10.12
-    iOS: 13.0
+    iOS: 12.0
 settings:
   base:
     SWIFT_VERSION: 5.0
