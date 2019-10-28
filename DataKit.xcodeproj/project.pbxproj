@@ -607,6 +607,7 @@
 				);
 				INFOPLIST_FILE = Tests/DataKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.supersimple.swiftcommon.DataKitTests-macOS";
 				PRODUCT_NAME = DataKitTests;
 				SDKROOT = macosx;
 			};
@@ -617,6 +618,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = io.supersimple.swiftcommon.DataKitBenchmark;
 				SDKROOT = macosx;
 				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
 				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
@@ -637,6 +639,7 @@
 				INFOPLIST_FILE = Sources/DataKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.supersimple.swiftcommon.DataKit-macOS";
 				PRODUCT_NAME = DataKit;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -716,6 +719,7 @@
 				);
 				INFOPLIST_FILE = Tests/DataKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.supersimple.swiftcommon.DataKitTests-macOS";
 				PRODUCT_NAME = DataKitTests;
 				SDKROOT = macosx;
 			};
@@ -734,6 +738,7 @@
 				INFOPLIST_FILE = Sources/DataKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.supersimple.swiftcommon.DataKit-macOS";
 				PRODUCT_NAME = DataKit;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -753,6 +758,7 @@
 				INFOPLIST_FILE = Sources/DataKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.supersimple.swiftcommon.DataKit-iOS";
 				PRODUCT_NAME = DataKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -766,6 +772,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = io.supersimple.swiftcommon.DataKitBenchmark;
 				SDKROOT = macosx;
 				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
 				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
@@ -783,6 +790,7 @@
 				);
 				INFOPLIST_FILE = Tests/DataKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.supersimple.swiftcommon.DataKitTests-iOS";
 				PRODUCT_NAME = DataKitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -801,6 +809,7 @@
 				INFOPLIST_FILE = Sources/DataKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.supersimple.swiftcommon.DataKit-iOS";
 				PRODUCT_NAME = DataKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -819,6 +828,7 @@
 				);
 				INFOPLIST_FILE = Tests/DataKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.supersimple.swiftcommon.DataKitTests-iOS";
 				PRODUCT_NAME = DataKitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
