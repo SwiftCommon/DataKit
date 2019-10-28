@@ -1,5 +1,6 @@
 name: DataKit
 options:
+  bundleIdPrefix: io.supersimple.swiftcommon
   deploymentTarget:
     macOS: 10.12
     iOS: 12.0

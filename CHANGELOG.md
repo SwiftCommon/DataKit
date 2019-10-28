@@ -3,6 +3,11 @@
 Pre-release
 -----------
 
+1.0.2
+-----
+
+* [Config] Added bundleIdePrefix to project.yml
+
 1.0.1
 -----
 
