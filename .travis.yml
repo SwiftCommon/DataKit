@@ -1,6 +1,10 @@
 language: objective-c
 osx_image: xcode11
 sudo: false
+cache:
+  cargo: true
+  directories:
+    - vendor/gems
 env:
   global:
   - LC_CTYPE=en_US.UTF-8

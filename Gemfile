@@ -1,5 +1,6 @@
-ruby "2.6.0"
 source "https://rubygems.org"
+
+ruby "~>2.6.0"
 
 gem "fastlane", "~>2.114"
 gem "danger", "~>6.0"
