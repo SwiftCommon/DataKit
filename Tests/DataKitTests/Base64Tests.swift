@@ -58,6 +58,14 @@ final class Base64Tests: XCTestCase {
         expect(encoded) == expected
     }
 
+    func testURLSafeEncodingNoData() {
+        let plain = Data()
+        let expected = Data()
+        let encoded = Base64.urlSafe.encode(data: plain)
+
+        expect(encoded).to(equal(expected))
+    }
+
     func testURLSafeEncoding_padding() {
         let plain = type(of: self).plainLoremIpsum
         //swiftlint:disable:next force_try
