@@ -16,7 +16,7 @@
 
 # This is the minimum version number required.
 # Update this, if you use features of a newer version
-fastlane_version "2.114.0"
+fastlane_version "2.187"
 
 def true?(value)
   if value.nil?
@@ -76,7 +76,7 @@ desc ""
 lane :generate_xcodeproj do |options|
   if File.exist? "../project.yml"
     # Let Xcodegen generate the Project
-    carthage(command: "bootstrap", no_build: false, use_binaries: false, cache_builds: true)
+    carthage(command: "bootstrap", no_build: false, use_binaries: false, use_xcframeworks: true, cache_builds: true)
     sh("xcodegen", "generate", "--spec", "../project.yml")
   else
     # Let SPM create the xcodeproj
