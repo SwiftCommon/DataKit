@@ -36,26 +36,16 @@ final class Base64Tests: XCTestCase {
         let base64data = try! Data(contentsOf: resource(file: "asciifull.b64url")) //swiftlint:disable:this force_try
         let expected = try! Data(contentsOf: resource(file: "asciifull.gif")) //swiftlint:disable:this force_try
 
-        expect {
-            try Base64.decode(data: base64data)
-        } == expected
+        expect (try Base64.decode(data: base64data)) == expected
     }
 
     func testURLSafeDecoding_LoremIpsum() {
         let file = resource(file: "PlainLoremIpsum.b64url")
         let data = try! Data(contentsOf: file) //swiftlint:disable:this force_try
 
-        expect {
-            try Base64.decode(data: data)
-        } == type(of: self).plainLoremIpsum
-
-        expect {
-            try Base64.decode(data: data, mode: .ignoreWhiteSpaceAndNewline)
-        } == type(of: self).plainLoremIpsum
-
-        expect {
-            try Base64.decode(data: data, mode: .ignoreInvalidCharacters)
-        } == type(of: self).plainLoremIpsum
+        expect(try Base64.decode(data: data)) == type(of: self).plainLoremIpsum
+        expect(try Base64.decode(data: data, mode: .ignoreWhiteSpaceAndNewline)) == type(of: self).plainLoremIpsum
+        expect(try Base64.decode(data: data, mode: .ignoreInvalidCharacters)) == type(of: self).plainLoremIpsum
     }
 
     /// Mark: Base64 URL Safe encoding
@@ -66,6 +56,14 @@ final class Base64Tests: XCTestCase {
         let encoded = Base64.urlSafe.encode(data: plain)
 
         expect(encoded) == expected
+    }
+
+    func testURLSafeEncodingNoData() {
+        let plain = Data()
+        let expected = Data()
+        let encoded = Base64.urlSafe.encode(data: plain)
+
+        expect(encoded).to(equal(expected))
     }
 
     func testURLSafeEncoding_padding() {
@@ -82,128 +80,87 @@ final class Base64Tests: XCTestCase {
         let base64 = "YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXowMTIzNDU2Nzg5Cg=="
         let plain = "abcdefghijklmnopqrstuvwxyz0123456789\n".cStringByteBuffer
 
-        expect {
-            try Base64.decode(string: base64)
-        } == plain
+        expect(try Base64.decode(string: base64)) == plain
     }
 
     func testBase64DecodingEmpty() {
         let base64 = Data()
 
-        expect {
-            try Base64.decode(data: base64)
-        } == Data()
+        expect(try Base64.decode(data: base64)) == Data()
     }
 
     func testBase64Decoding_image() {
         let base64data = try! Data(contentsOf: resource(file: "asciifull.b64")) //swiftlint:disable:this force_try
         let expected = try! Data(contentsOf: resource(file: "asciifull.gif")) //swiftlint:disable:this force_try
 
-        expect {
-            try Base64.decode(data: base64data)
-        } == expected
+        expect(try Base64.decode(data: base64data)) == expected
     }
 
     func testBase64Decoding_CR_LF() {
         let file = resource(file: "PlainLoremIpsum_CR_LF_76.b64")
         let data = try! Data(contentsOf: file) //swiftlint:disable:this force_try
 
-        expect {
-            try Base64.decode(data: data)
-        }.to(throwError(Base64.Error.invalidBase64String))
+        expect(try Base64.decode(data: data)).to(throwError(Base64.Error.invalidBase64String))
 
-        expect {
-            try Base64.decode(data: data, mode: .ignoreWhiteSpaceAndNewline)
-        } == type(of: self).plainLoremIpsum
+        expect(try Base64.decode(data: data, mode: .ignoreWhiteSpaceAndNewline)) == type(of: self).plainLoremIpsum
 
-        expect {
-            try Base64.decode(data: data, mode: .ignoreInvalidCharacters)
-        } == type(of: self).plainLoremIpsum
+        expect(try Base64.decode(data: data, mode: .ignoreInvalidCharacters)) == type(of: self).plainLoremIpsum
     }
 
     func testBase64Decoding_LF() {
         let file = resource(file: "PlainLoremIpsum_60.b64")
         let data = try! Data(contentsOf: file) //swiftlint:disable:this force_try
 
-        expect {
-            try Base64.decode(data: data)
-        }.to(throwError(Base64.Error.invalidBase64String))
+        expect(try Base64.decode(data: data)).to(throwError(Base64.Error.invalidBase64String))
 
-        expect {
-            try Base64.decode(data: data, mode: .ignoreWhiteSpaceAndNewline)
-        } == type(of: self).plainLoremIpsum
+        expect(try Base64.decode(data: data, mode: .ignoreWhiteSpaceAndNewline)) == type(of: self).plainLoremIpsum
 
-        expect {
-            try Base64.decode(data: data, mode: .ignoreInvalidCharacters)
-        } == type(of: self).plainLoremIpsum
+        expect(try Base64.decode(data: data, mode: .ignoreInvalidCharacters)) == type(of: self).plainLoremIpsum
     }
 
     func testBase64Decoding_LoremIpsum() {
         let file = resource(file: "PlainLoremIpsum.b64")
         let data = try! Data(contentsOf: file) //swiftlint:disable:this force_try
 
-        expect {
-            try Base64.decode(data: data)
-        } == type(of: self).plainLoremIpsum
-
-        expect {
-            try Base64.decode(data: data, mode: .ignoreWhiteSpaceAndNewline)
-        } == type(of: self).plainLoremIpsum
-
-        expect {
-            try Base64.decode(data: data, mode: .ignoreInvalidCharacters)
-        } == type(of: self).plainLoremIpsum
+        expect(try Base64.decode(data: data)) == type(of: self).plainLoremIpsum
+        expect(try Base64.decode(data: data, mode: .ignoreWhiteSpaceAndNewline)) == type(of: self).plainLoremIpsum
+        expect(try Base64.decode(data: data, mode: .ignoreInvalidCharacters)) == type(of: self).plainLoremIpsum
     }
 
     func testBase64Decoding_LoremIpsum_no_padding() {
         let file = resource(file: "PlainLoremIpsum_76_no_padding.b64")
         let data = try! Data(contentsOf: file) //swiftlint:disable:this force_try
 
-        expect {
-            try Base64.decode(data: data)
-        }.to(throwError(Base64.Error.invalidBase64String))
-
-        expect {
-            try Base64.decode(data: data, mode: .ignoreWhiteSpaceAndNewline)
-        } == type(of: self).plainLoremIpsum
-
-        expect {
-            try Base64.decode(data: data, mode: .ignoreInvalidCharacters)
-        } == type(of: self).plainLoremIpsum
+        expect(try Base64.decode(data: data)).to(throwError(Base64.Error.invalidBase64String))
+        expect(try Base64.decode(data: data, mode: .ignoreWhiteSpaceAndNewline)) == type(of: self).plainLoremIpsum
+        expect(try Base64.decode(data: data, mode: .ignoreInvalidCharacters)) == type(of: self).plainLoremIpsum
     }
 
     func testBase64Decoding_illegal_characters() {
         let base64Illegal = "ñYWJjZGVmZ2%hpam.tsbW5vcHFyc3R1\ndnd4eXowMTIzüNDU2Nzg5Cg==".cStringByteBuffer
 
-        expect {
-            try Base64.decode(data: base64Illegal, mode: .failOnInvalidCharacters)
-        }.to(throwError(Base64.Error.invalidBase64String))
+        expect(try Base64.decode(data: base64Illegal, mode: .failOnInvalidCharacters))
+            .to(throwError(Base64.Error.invalidBase64String))
 
-        expect {
-            try Base64.decode(data: base64Illegal, mode: .ignoreWhiteSpaceAndNewline)
-        }.to(throwError(Base64.Error.invalidBase64String))
+        expect(try Base64.decode(data: base64Illegal, mode: .ignoreWhiteSpaceAndNewline))
+            .to(throwError(Base64.Error.invalidBase64String))
 
         let plain = "abcdefghijklmnopqrstuvwxyz0123456789\n".cStringByteBuffer
-        expect {
-            try Base64.decode(data: base64Illegal, mode: .ignoreInvalidCharacters)
-        } == plain
+        expect(try Base64.decode(data: base64Illegal, mode: .ignoreInvalidCharacters)).to(equal(plain))
     }
 
     func testBase64Decoding_illegal_characters_with_early_padding() {
         let base64Illegal = "ñYWJjZGVmZ2%hpam.tsbW5vcHFy=c3R1\ndnd4eXowMTIzüNDU2Nzg5Cg==".cStringByteBuffer
 
-        expect {
-            try Base64.decode(data: base64Illegal, mode: .failOnInvalidCharacters)
-        }.to(throwError(Base64.Error.invalidBase64String))
+        expect (try Base64.decode(data: base64Illegal, mode: .failOnInvalidCharacters))
+            .to(throwError(Base64.Error.invalidBase64String))
 
-        expect {
-            try Base64.decode(data: base64Illegal, mode: .ignoreWhiteSpaceAndNewline)
-        }.to(throwError(Base64.Error.invalidBase64String))
+        expect (try Base64.decode(data: base64Illegal, mode: .ignoreWhiteSpaceAndNewline))
+            .to(throwError(Base64.Error.invalidBase64String))
 
         let plain = "abcdefghijklmnopqr".cStringByteBuffer
-        expect {
-            try Base64.decode(data: base64Illegal, mode: .ignoreInvalidCharacters)
-        } == plain
+        expect (try Base64.decode(data: base64Illegal, mode: .ignoreInvalidCharacters))
+            .to(equal(plain))
     }
 
     func testBase64DecodingLength() {

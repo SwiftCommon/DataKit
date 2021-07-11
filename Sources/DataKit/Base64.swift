@@ -157,8 +157,10 @@ public enum Base64 {
         let characterTable = self.table.utf8CString
 
         // Pad the last 2 output bytes just in case padding would be needed. If not, the bytes will be overridden later.
-        dataPtr[outlen - 2] = characterTable[0x40]
-        dataPtr[outlen - 1] = characterTable[0x40]
+        if outlen > 2 {
+            dataPtr[outlen - 2] = characterTable[0x40]
+            dataPtr[outlen - 1] = characterTable[0x40]
+        }
 
         // pointer to the input data backing buffer
         _ = data.withUnsafeBytes { (bytesPtr: UnsafeRawBufferPointer) -> Int in
