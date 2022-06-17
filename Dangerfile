@@ -28,6 +28,7 @@ files.protect_files(path: "fastlane/.env", message: "🏎  Fastlane file modifie
 files.protect_files(path: "fastlane/.env.default", message: "🏎  Fastlane file modified (.env.default)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
 files.protect_files(path: "fastlane/.env.ios12_xcode10", message: "🏎  Fastlane file modified (.env.ios12_xcode10)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
 files.protect_files(path: "fastlane/.env.ios13_xcode11", message: "🏎  Fastlane file modified (.env.ios13_xcode11)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
+files.protect_files(path: "fastlane/.env.ios15_xcode13", message: "🏎  Fastlane file modified (.env.ios15_xcode13)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
 files.protect_files(path: "fastlane/.env.osx14", message: "🏎  Fastlane file modified (.env.osx14)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
 files.protect_files(path: "fastlane/.env.osx15", message: "🏎  Fastlane file modified (.env.osx14)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
 files.protect_files(path: "fastlane/Fastfile", message: "🏎  Fastlane file modified (Fastfile)", fail_build: !declared_dev_known, callback: method(:failOrWarn))
