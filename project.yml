@@ -28,6 +28,7 @@ targets:
     platform: macOS
     settings:
       base:
+        BUILD_LIBRARY_FOR_DISTRIBUTION: NO
         SWIFT_FORCE_DYNAMIC_LINK_STDLIB: YES
         SWIFT_FORCE_STATIC_LINK_STDLIB: NO
         LD_RUNPATH_SEARCH_PATHS: "$(inherited)"
