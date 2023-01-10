@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1200"
-   version = "1.7">
+   LastUpgradeVersion = "1340"
+   version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
-      buildImplicitDependencies = "YES"
-      runPostActionsOnFailure = "NO">
+      buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -15,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9CEF2CF10326FE13AB73C0CD"
-               BuildableName = "DataKit.framework"
-               BlueprintName = "DataKit_iOS"
+               BlueprintIdentifier = "24699A55FD72323B0842C50D"
+               BuildableName = "DataKitBenchmark"
+               BlueprintName = "DataKitBenchmark"
                ReferencedContainer = "container:DataKit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -27,32 +26,9 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      codeCoverageEnabled = "YES"
-      onlyGenerateCoverageForSpecifiedTargets = "NO"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A6ACD1CA411E146A8BF1D7A0"
-               BuildableName = "DataKitTests.xctest"
-               BlueprintName = "DataKitTests_iOS"
-               ReferencedContainer = "container:DataKit.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9CEF2CF10326FE13AB73C0CD"
-            BuildableName = "DataKit.framework"
-            BlueprintName = "DataKit_iOS"
-            ReferencedContainer = "container:DataKit.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <CommandLineArguments>
-      </CommandLineArguments>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -64,17 +40,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9CEF2CF10326FE13AB73C0CD"
-            BuildableName = "DataKit.framework"
-            BlueprintName = "DataKit_iOS"
+            BlueprintIdentifier = "24699A55FD72323B0842C50D"
+            BuildableName = "DataKitBenchmark"
+            BlueprintName = "DataKitBenchmark"
             ReferencedContainer = "container:DataKit.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
-      <CommandLineArguments>
-      </CommandLineArguments>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -86,14 +61,12 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9CEF2CF10326FE13AB73C0CD"
-            BuildableName = "DataKit.framework"
-            BlueprintName = "DataKit_iOS"
+            BlueprintIdentifier = "24699A55FD72323B0842C50D"
+            BuildableName = "DataKitBenchmark"
+            BlueprintName = "DataKitBenchmark"
             ReferencedContainer = "container:DataKit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-      </CommandLineArguments>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
