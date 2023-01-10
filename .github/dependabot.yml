@@ -1,0 +1,23 @@
+version: 2
+updates:
+- package-ecosystem: bundler
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: excon
+    versions:
+    - 0.78.1
+    - 0.79.0
+    - 0.80.1
+  - dependency-name: danger-swiftlint
+    versions:
+    - 0.24.5
+    - 0.25.0
+  - dependency-name: kramdown
+    versions:
+    - 2.3.0
+  - dependency-name: danger
+    versions:
+    - 8.2.2
