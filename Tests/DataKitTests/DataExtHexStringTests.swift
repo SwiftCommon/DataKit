@@ -23,23 +23,23 @@ final class DataExtHexStringTests: XCTestCase {
     func testHexStringToData() {
         let hexString = "0003f6A0ff"
         let expectedBytes: [UInt8] = [0, 3, 246, 160, 255]
-        expect {
+        expect(
             try Data(hex: hexString)
-        }.to(equal(expectedBytes.data))
+        ).to(equal(expectedBytes.data))
     }
 
     func testHexStringToData_invalid_length() {
         let hexString = "0003f6a0ff0"
-        expect {
+        expect(
             try Data(hex: hexString)
-        }.to(throwError(HexStringParsingError.invalidLength(hexString.count)))
+        ).to(throwError(HexStringParsingError.invalidLength(hexString.count)))
     }
 
     func testNotSoHexStringToData_illegalCharacters() {
         let hexString = "nothex"
-        expect {
+        expect(
             try Data(hex: hexString)
-        }.to(throwError(HexStringParsingError.illegalCharacters(pattern: hexString, index: 0, literal: "no")))
+        ).to(throwError(HexStringParsingError.illegalCharacters(pattern: hexString, index: 0, literal: "no")))
     }
 
     static let allTests = [
