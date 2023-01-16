@@ -30,6 +30,8 @@ jobs:
       - name: Setup
         run: make setup
       - name: Danger
+        env:
+          DANGER_GITHUB_API_TOKEN: {{ secrets.DANGER_GITHUB_API_TOKEN }}
         run: |
           bundle exec danger
           bash <(curl -s https://codecov.io/bash) -J 'DataKit'
