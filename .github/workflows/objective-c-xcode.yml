@@ -1,0 +1,65 @@
+name: Xcode - Build and Analyze
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  LC_CTYPE: en_US.UTF-8
+  LANG: en_US.UTF-8
+  LANGUAGE: en_US.UTF-8
+
+jobs:
+  cancel-previous:
+    name: Cancel Previous
+    permissions:
+      contents: read
+      actions: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Build
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+  danger:
+    name: Check Danger
+    runs-on: ubuntu-latest
+    needs: cancel-previous
+    env:
+      DANGER_GITHUB_BEARER_TOKEN: ${{ secrets.DANGER_GITHUB_API_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Check
+        run: bundle exec danger
+
+  build:
+    name: Build and analyse default scheme using xcodebuild command
+    runs-on: macos-latest
+    needs: cancel-previous
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Setup
+        run: make setup
+      - name: Test code Coverage
+        run: |
+          make cibuild FL_LANE=code_coverage FASTLANE_ENV=default
+          bash <(curl -s https://codecov.io/bash) -J 'DataKit'
+      - name: Build iOS
+        run: make cibuild FASTLANE_ENV=ios13_xcode11
+      - name: Build macOS
+        run: make cibuild FASTLANE_ENV=osx15

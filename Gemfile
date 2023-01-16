@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "~>2.6"
+ruby "~>2.7"
 
 gem "fastlane", "~>2.206"
 gem "danger", "~>8.4"

@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # script/bootstrap: Resolve all dependencies that the application requires to
 #                   run.
 
-set -ev
+set -eo pipefail
 
 cd "$(dirname "$0")/.."
 
@@ -33,9 +33,13 @@ fi
 # fi
 
 if [ -f "Gemfile" ]; then
+  hash bundle 2>/dev/null || {
+    echo "==> Installing gem bundler 2.1.4…"
+    gem install bundler -v 2.1.4 --no-document --quiet
+  }
   echo "==> Installing gem dependencies…"
-  gem install bundler -v 2.0.1 --no-document --quiet
-  bundle check --path vendor/gems >/dev/null 2>&1  || {
-    bundle install --path vendor/gems --quiet --without production
+  bundle config set path 'vendor/gems'
+  bundle check >/dev/null 2>&1  || {
+    bundle install --quiet
   }
 fi
